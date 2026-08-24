@@ -1,0 +1,242 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196f4d3c079dd594ea366842c439b197, type: 3}
+  m_Name: En
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizationData
+  <Real>k__BackingField: 1
+  <Substitutes>k__BackingField: 01000000
+  <HourTime>k__BackingField: h
+  <MinuteTime>k__BackingField: m
+  <SecondTime>k__BackingField: s
+  Suffixies:
+  - 
+  - K
+  - M
+  - B
+  - T
+  - "\u041A\u0432"
+  - "\u041A\u0430"
+  <AdsInterstitial>k__BackingField: Ad in
+  <LabelProgressNarrator>k__BackingField: Label
+  BotsPhrases:
+  - hello
+  - hi
+  - yo
+  - let's go
+  - 'Go '
+  - hey everyone
+  - have fun
+  - cool
+  - nice
+  - great
+  - i see
+  - got it
+  - come on
+  - well well
+  - oops
+  - whoa
+  - whew
+  Timer: Start in {0}...
+  Enemy: Enemy
+  TakePet: Take pet!
+  GetButton: Get
+  Money: Money
+  SelectSkinButton: Select
+  SelectedSkinButton: Selected
+  You: You
+  PlayerWinner: '{0} wins! '
+  PlayerExploded: Player boomed!
+  TaskTranslates:
+  - <Id>k__BackingField: 0
+    _text: Pass the bomb {0} times
+  - <Id>k__BackingField: 2
+    _text: Live for {0} seconds
+  - <Id>k__BackingField: 3
+    _text: Play {0} rounds
+  - <Id>k__BackingField: 4
+    _text: Win {0} times
+  - <Id>k__BackingField: 5
+    _text: Use the speed bonus {0} times
+  - <Id>k__BackingField: 6
+    _text: Use the jump bonus {0} times
+  - <Id>k__BackingField: 7
+    _text: Use the invisibility bonus {0} times
+  - <Id>k__BackingField: 8
+    _text: Go through parkour {0} times
+  TutorialTranslates:
+  - <Id>k__BackingField: 0
+    _text: Catch the enemy and pass the bomb
+  - <Id>k__BackingField: 1
+    _text: Run away from the enemy with the bomb
+  - <Id>k__BackingField: 2
+    _text: Catch the enemy, pass the bomb, and win!
+  ModifiersTranslates:
+  - <Id>k__BackingField: {fileID: 11400000, guid: 74a90e14284c5094183c178ada86850c, type: 2}
+    _text: Capacity
+  - <Id>k__BackingField: {fileID: 11400000, guid: c83c32378f4b18b4e9788953552c11d9, type: 2}
+    _text: Damage
+  - <Id>k__BackingField: {fileID: 11400000, guid: d1f8dd7c079fab74a95e58d6b37d18d0, type: 2}
+    _text: Rate Of Fire
+  EggStationNameTranslates: []
+  <StaticTranslates>k__BackingField:
+  - <Id>k__BackingField: Parkour Header Text
+    <Data>k__BackingField: Parkour
+  - <Id>k__BackingField: Parkour Prize
+    <Data>k__BackingField: Get a reward for completing!
+  - <Id>k__BackingField: Parkour Footer Text
+    <Data>k__BackingField: Start
+  - <Id>k__BackingField: Fast Game Gate Header Text
+    <Data>k__BackingField: Start Game
+  - <Id>k__BackingField: In Fight
+    <Data>k__BackingField: In Fight
+  - <Id>k__BackingField: Fast Game Gate Footer Text
+    <Data>k__BackingField: Go!
+  - <Id>k__BackingField: Roulette
+    <Data>k__BackingField: Roulette
+  - <Id>k__BackingField: Shop
+    <Data>k__BackingField: Shop
+  - <Id>k__BackingField: Bonus
+    <Data>k__BackingField: Bonus
+  - <Id>k__BackingField: Award
+    <Data>k__BackingField: Award
+  - <Id>k__BackingField: Take Award
+    <Data>k__BackingField: Take Award
+  - <Id>k__BackingField: Start Game
+    <Data>k__BackingField: Start game
+  - <Id>k__BackingField: Game For Two
+    <Data>k__BackingField: Game For Two
+  - <Id>k__BackingField: Gift
+    <Data>k__BackingField: Gift
+  - <Id>k__BackingField: Quest
+    <Data>k__BackingField: Quest
+  - <Id>k__BackingField: AFK
+    <Data>k__BackingField: AFK
+  - <Id>k__BackingField: You are not in the fight
+    <Data>k__BackingField: You are not in the fight
+  - <Id>k__BackingField: Settings
+    <Data>k__BackingField: Settings
+  - <Id>k__BackingField: Music
+    <Data>k__BackingField: Music
+  - <Id>k__BackingField: Effects
+    <Data>k__BackingField: Effects
+  - <Id>k__BackingField: FOV
+    <Data>k__BackingField: FOV
+  - <Id>k__BackingField: Sensitivity
+    <Data>k__BackingField: Sensitivity
+  - <Id>k__BackingField: Daily Rewards
+    <Data>k__BackingField: Daily Rewards
+  - <Id>k__BackingField: Day
+    <Data>k__BackingField: Day
+  - <Id>k__BackingField: Tutorial Info Header Text
+    <Data>k__BackingField: Tutorial
+  - <Id>k__BackingField: Victory
+    <Data>k__BackingField: Victory
+  - <Id>k__BackingField: Lose
+    <Data>k__BackingField: Lose
+  - <Id>k__BackingField: Result
+    <Data>k__BackingField: Result
+  - <Id>k__BackingField: Sale X2
+    <Data>k__BackingField: Benefit X2
+  - <Id>k__BackingField: Continue
+    <Data>k__BackingField: Continue
+  - <Id>k__BackingField: Lucky Spin
+    <Data>k__BackingField: Lucky Spin
+  - <Id>k__BackingField: Next attempt via
+    <Data>k__BackingField: Next attempt via
+  - <Id>k__BackingField: Free Spin
+    <Data>k__BackingField: Free Spin!
+  - <Id>k__BackingField: Get
+    <Data>k__BackingField: Get
+  - <Id>k__BackingField: Bonuses
+    <Data>k__BackingField: Bonuses
+  - <Id>k__BackingField: At you
+    <Data>k__BackingField: At you
+  - <Id>k__BackingField: Random bonus
+    <Data>k__BackingField: Random bonus
+  - <Id>k__BackingField: Reset all quests
+    <Data>k__BackingField: Reset all quests
+  - <Id>k__BackingField: All Task Done Notification
+    <Data>k__BackingField: All Task Done Notification
+  - <Id>k__BackingField: Wind
+    <Data>k__BackingField: Wind
+  - <Id>k__BackingField: Your move
+    <Data>k__BackingField: Your move
+  - <Id>k__BackingField: Enemy move
+    <Data>k__BackingField: Enemy move
+  - <Id>k__BackingField: Go ahead
+    <Data>k__BackingField: Go ahead!
+  - <Id>k__BackingField: Get ready
+    <Data>k__BackingField: Get ready
+  - <Id>k__BackingField: You move In Battle
+    <Data>k__BackingField: You move!
+  - <Id>k__BackingField: Enemy move In Battle
+    <Data>k__BackingField: Enemy move!
+  - <Id>k__BackingField: Roulette Skin Text
+    <Data>k__BackingField: Dropping
+  - <Id>k__BackingField: Damage Skin
+    <Data>k__BackingField: Damage
+  - <Id>k__BackingField: Give Up
+    <Data>k__BackingField: Give Up
+  - <Id>k__BackingField: Player
+    <Data>k__BackingField: PLAYER
+  - <Id>k__BackingField: Winner
+    <Data>k__BackingField: WINNER
+  - <Id>k__BackingField: AlertAd
+    <Data>k__BackingField: Ad in
+  - <Id>k__BackingField: Spin
+    <Data>k__BackingField: Spin
+  - <Id>k__BackingField: Selected
+    <Data>k__BackingField: Selected
+  - <Id>k__BackingField: Select
+    <Data>k__BackingField: Select
+  - <Id>k__BackingField: Skins
+    <Data>k__BackingField: Skins
+  - <Id>k__BackingField: Change Face
+    <Data>k__BackingField: Change face
+  - <Id>k__BackingField: Review
+    <Data>k__BackingField: Review
+  - <Id>k__BackingField: Open
+    <Data>k__BackingField: Open
+  - <Id>k__BackingField: Open eggs
+    <Data>k__BackingField: Open eggs
+  - <Id>k__BackingField: More Games
+    <Data>k__BackingField: More games
+  - <Id>k__BackingField: Pets
+    <Data>k__BackingField: Pets
+  - <Id>k__BackingField: Pet Speed Info
+    <Data>k__BackingField: increase speed
+  - <Id>k__BackingField: You have the bomb
+    <Data>k__BackingField: YOU HAVE THE BOMB!
+  - <Id>k__BackingField: Games
+    <Data>k__BackingField: Games
+  - <Id>k__BackingField: Max
+    <Data>k__BackingField: Max
+  - <Id>k__BackingField: VKontakte
+    <Data>k__BackingField: VKontakte
+  - <Id>k__BackingField: Telegram
+    <Data>k__BackingField: Telegram
+  DailyReward:
+    <ShowAsAllowReceive>k__BackingField: Get
+    <ShowAsReceived>k__BackingField: Gotten
+    <ShowAsBlockedForReceive>k__BackingField: Soon...
+  SkinChanger:
+    Translations:
+    - <Id>k__BackingField: 1
+      <Data>k__BackingField: Header
+    - <Id>k__BackingField: 2
+      <Data>k__BackingField: Body
+    - <Id>k__BackingField: 3
+      <Data>k__BackingField: Pants
+    - <Id>k__BackingField: 4
+      <Data>k__BackingField: Shoes
+    - <Id>k__BackingField: 5
+      <Data>k__BackingField: Accessories

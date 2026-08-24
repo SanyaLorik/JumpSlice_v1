@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7119f28a206f8cb43bc38f3763d2f4ee, type: 3}
+  m_Name: Local Save
+  m_EditorClassIdentifier: Assembly-CSharp::GameSaveSO
+  Save:
+    Money: 10190771
+    IsBoughtPurchase: 0
+    TutorialPassed: 1
+    PlayerLevel: 1
+    Modifiers:
+    - Id: Damage
+      Level: 1
+    - Id: RateOfFire
+      Level: 10
+    - Id: Capacity
+      Level: 100
+    Tasks:
+    - Id: pass_bomb_10
+      Count: 10
+      IsGetReward: 0
+    - Id: life_sec_100
+      Count: 137
+      IsGetReward: 0
+    - Id: life_round_15
+      Count: 15
+      IsGetReward: 0
+    - Id: win_count_5
+      Count: 4
+      IsGetReward: 0
+    - Id: use_speed_bonus_10
+      Count: 10
+      IsGetReward: 0
+    - Id: use_super_jump_bonus_10
+      Count: 1
+      IsGetReward: 0
+    - Id: use_invincible_bonus_10
+      Count: 2
+      IsGetReward: 0
+    - Id: parkour_count_1
+      Count: 0
+      IsGetReward: 0
+    Pets: []
+    DailyRewardSave:
+      LastDateTimeReceived: 
+      LastDayNumber: -1
+    WheelFortuneSave:
+      CountSpinAllow: 3
+      LastDateTimeSpined: 04.05.2026 21:14:30
+    DailyQuestSave:
+      LastDateTimeEntered: 
+    SkinSave:
+      SkinSets:
+      - GroupId: 1
+        BoughtIds: 0100000006000000
+        EquippedId: 6
+      - GroupId: 2
+        BoughtIds: 0100000003000000
+        EquippedId: 3
+      - GroupId: 3
+        BoughtIds: 01000000
+        EquippedId: 1
+      - GroupId: 4
+        BoughtIds: 01000000
+        EquippedId: 1
+      - GroupId: 5
+        BoughtIds: 01000000
+        EquippedId: 1
+    CommunitySave:
+      LastDateTimeSocialNetworking: 11.05.2026 21:03:11
