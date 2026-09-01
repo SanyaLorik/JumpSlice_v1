@@ -1,19 +1,26 @@
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] private Transform _player;
-    [SerializeField] private Transform _target;
 
     [Header("Input")]
     [SerializeField] private CustomInput _input;
 
     [Header("Move")]
-    [SerializeField] private AnimationCurve _trajectory;
+    [SerializeField] private TrajectoryLine _trajectory;
+    [SerializeField] private AnimationCurve _verticalCurve;
+    [SerializeField] private AnimationCurve _horizantalCurve;
     [SerializeField] private float _duration;
-    [SerializeField] private float _height;
+
+    public event Action OnMoved;
+
+    public Transform Target { private get; set; }
+
+    private bool _isMoving = false;
 
     private void OnEnable()
     {
@@ -27,11 +34,17 @@ public class Movement : MonoBehaviour
 
     private void OnMove()
     {
-        Move(_target).Forget();
+        if (_isMoving == true) 
+            return;
+
+        _trajectory.HideAnimationAsync().Forget();
+        MoveAsync(Target).Forget();
     }
 
-    private async UniTaskVoid Move(Transform target)
+    private async UniTaskVoid MoveAsync(Transform target)
     {
+        _isMoving = true;
+
         float expendedTime = 0;
 
         Vector3 initial = transform.position;
@@ -42,10 +55,13 @@ public class Movement : MonoBehaviour
             // Нормализованное время (0..1)
             float t = Mathf.Clamp01(expendedTime / _duration);
 
-            Vector3 horizontalPosition = Vector3.Lerp(initial, final, t);
+            // Горизонтальное движение по кривой
+            float horizontalLerp = _horizantalCurve.Evaluate(t);
+            Vector3 horizontalPosition = Vector3.Lerp(initial, final, horizontalLerp);
 
             // Вертикальное движение по кривой
-            float heightOffset = _trajectory.Evaluate(t) * _height;
+            float verticalLerp = _verticalCurve.Evaluate(t);
+            float heightOffset = _trajectory.Trajectory.Evaluate(verticalLerp) * _trajectory.Height;
             Vector3 verticalOffset = Vector3.up * heightOffset;
 
             // Финальная позиция
@@ -55,5 +71,10 @@ public class Movement : MonoBehaviour
             await UniTask.Yield();
         }
         while (expendedTime < _duration);
+
+        _isMoving = false;
+
+        OnMoved?.Invoke();
     }
 }
+
