@@ -2,30 +2,23 @@ using Architecture_M;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
-public class MainState : MonoBehaviour
+public class MainState : StateBase
 {
     [Header("Window")]
     [SerializeField] private WindowBase _mainWindow;
-    [SerializeField] private WindowBase _ingameWindow;
 
     [Header("Managment")]
     [SerializeField] private Button _button;
 
-    [Header("Gameplay")]
-    [SerializeField] private MovementDirector _movementDirector;
-
-    [Header("FX")]
-    [SerializeField] private TrajectoryLine _trajectoryLine;
-
-    [Inject] private WindowSwitcher _windowSwitcher;
-
+    [Header("States")]
+    [SerializeField] private StateBase _ingameState;
+    [SerializeField] private CameraState _cameraState;
+    
     private void Start()
     {
-        StartMainAsync().Forget();
+        Enter().Forget();
     }
-
     private void OnEnable()
     {
         _button.onClick.AddListener(OnStartGame);
@@ -36,22 +29,24 @@ public class MainState : MonoBehaviour
         _button.onClick.RemoveListener(OnStartGame);
     }
 
+    public override async UniTask Enter()
+    {
+        StartMainAsync().Forget();
+    }
+
+    public override async UniTask Exit()
+    {
+        await _mainWindow.Hide();
+        await _ingameState.Enter();
+    }
+
     private void OnStartGame()
     {
-        StartGameAsync().Forget();
+        Exit().Forget();
     }
 
     private async UniTaskVoid StartMainAsync()
     {
-        _trajectoryLine.Hide();
-    }
-
-    private async UniTaskVoid StartGameAsync()
-    {
-        await _windowSwitcher.Switch(_ingameWindow);
-
-        _movementDirector.StartDirection();
-
-        await _trajectoryLine.ShowAnimationAsync();
+        _cameraState.CameraMenu();
     }
 }

@@ -22,17 +22,18 @@ public class PlatfromGenerator : MonoBehaviour
 
     public Platform Generate()
     {
-        CalculateNewPosition();
+        Vector3 direction = CalculateNewPositionAndReturnDirection();
 
         Platform platform = Spawn();
         platform.SetNumber(_numberCounter);
+        platform.SetDirection(direction);
 
         _numberCounter++;
 
         return platform;
     }
 
-    private void CalculateNewPosition()
+    private Vector3 CalculateNewPositionAndReturnDirection()
     {
         Vector3 direction = _direction.GetRandomElement();
         if (_numberCounter == 1)
@@ -42,6 +43,8 @@ public class PlatfromGenerator : MonoBehaviour
         Vector3 offset = direction * distance;
 
         _position += offset;
+
+        return direction;
     }
 
     private Platform Spawn()

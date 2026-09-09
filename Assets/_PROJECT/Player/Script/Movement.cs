@@ -1,80 +1,81 @@
 using Cysharp.Threading.Tasks;
+using SanyaBeerExtension;
 using System;
+using System.Threading;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [Header("Player")]
+    [Header("Movement")]
     [SerializeField] private Transform _player;
+    [SerializeField] private AnimationCurve _trajectory;
+    [SerializeField] private float _height;
 
-    [Header("Input")]
-    [SerializeField] private CustomInput _input;
+    [Header("Target")]
+    [SerializeField] private AnimationCurve _lineEase;
+    [SerializeField] private PairedValue<float> _range;
+    [SerializeField] private float _durationRange;
 
-    [Header("Move")]
-    [SerializeField] private TrajectoryLine _trajectory;
-    [SerializeField] private AnimationCurve _verticalCurve;
-    [SerializeField] private AnimationCurve _horizantalCurve;
-    [SerializeField] private float _duration;
+    [Header("Animation")]
+    [SerializeField] private MovementAnimation _movementAnimation;
+    [SerializeField] private TrajectoryAnimation _trajectoryAnimation;
 
     public event Action OnMoved;
 
-    public Transform Target { private get; set; }
+    private CancellationTokenSource _tokenSource;
+    private Vector3 _currentTarget;
 
-    private bool _isMoving = false;
-
-    private void OnEnable()
+    [ContextMenu("Create")]
+    private void CreateInInspector()
     {
-        _input.OnUp += OnMove;
+        _trajectoryAnimation.CreateLineDebug(_player.position, _trajectory, _height);
     }
 
-    private void OnDisable()
+    public void SetTarget(Vector3 target, Vector3 direction)
     {
-        _input.OnUp -= OnMove;
+        _tokenSource?.Cancel();
+        _tokenSource?.Dispose();
+
+        MoveAsync(target, direction);
     }
 
-    private void OnMove()
+    public void Move()
     {
-        if (_isMoving == true) 
-            return;
-
-        _trajectory.HideAnimationAsync().Forget();
-        MoveAsync(Target).Forget();
+        _movementAnimation
+            .MoveAsync(_player, _currentTarget, _trajectory, _height)
+            .Forget();
     }
 
-    private async UniTaskVoid MoveAsync(Transform target)
+    private async void MoveAsync(Vector3 target, Vector3 direction)
     {
-        _isMoving = true;
+        while (_tokenSource.IsCancellationRequested == false)
+        {
+            Vector3 from = target + direction * _range.From;
+            Vector3 to = target + direction * _range.To;
 
+            await MoveLocal(from, to);
+            await MoveLocal(to, from);
+        }
+    }
+
+    private async UniTask MoveLocal(Vector3 from, Vector3 to)
+    {
         float expendedTime = 0;
-
-        Vector3 initial = transform.position;
-        Vector3 final = target.position;
 
         do
         {
             // Нормализованное время (0..1)
-            float t = Mathf.Clamp01(expendedTime / _duration);
+            float t = Mathf.Clamp01(expendedTime / _durationRange);
 
-            // Горизонтальное движение по кривой
-            float horizontalLerp = _horizantalCurve.Evaluate(t);
-            Vector3 horizontalPosition = Vector3.Lerp(initial, final, horizontalLerp);
+            float lerp = _lineEase.Evaluate(t);
 
-            // Вертикальное движение по кривой
-            float verticalLerp = _verticalCurve.Evaluate(t);
-            float heightOffset = _trajectory.Trajectory.Evaluate(verticalLerp) * _trajectory.Height;
-            Vector3 verticalOffset = Vector3.up * heightOffset;
-
-            // Финальная позиция
-            transform.position = horizontalPosition + verticalOffset;
+            _currentTarget = Vector3.Lerp(from, to, lerp);
+            _trajectoryAnimation.CreateLine(_player.position, _currentTarget, _trajectory, _height);
 
             expendedTime += Time.deltaTime;
-            await UniTask.Yield();
+
+            await UniTask.Yield(cancellationToken: _tokenSource.Token);
         }
-        while (expendedTime < _duration);
-
-        _isMoving = false;
-
-        OnMoved?.Invoke();
+        while (expendedTime < _durationRange && _tokenSource.IsCancellationRequested == false);
     }
 }
-
