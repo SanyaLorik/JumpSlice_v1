@@ -43,17 +43,21 @@ public class Movement : MonoBehaviour
 
         _tokenSource = new CancellationTokenSource();
 
-        MoveAsync(target, direction).Forget();
+        _trajectoryAnimation.ShowAnimationAsync().Forget();
+
+        MoveTargetAsync(target, direction).Forget();
     }
 
     public void Move()
     {
+        _trajectoryAnimation.HideAnimationAsync().Forget();
+
         _movingTask = _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height)
             .ContinueWith(() => OnMoved?.Invoke());
     }
 
-    private async UniTaskVoid MoveAsync(Vector3 target, Vector3 direction)
+    private async UniTaskVoid MoveTargetAsync(Vector3 target, Vector3 direction)
     {
         while (_tokenSource.IsCancellationRequested == false)
         {

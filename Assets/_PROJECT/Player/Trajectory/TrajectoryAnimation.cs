@@ -23,7 +23,7 @@ public class TrajectoryAnimation : MonoBehaviour
     private void Start()
     {
         if (_isStartHide == true)
-            _line.DisactiveSelf();
+            Hide();
     }
 
     public async UniTask ShowAnimationAsync()
