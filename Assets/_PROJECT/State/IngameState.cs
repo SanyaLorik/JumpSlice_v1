@@ -13,6 +13,9 @@ public class IngameState : StateBase
     [SerializeField] private PlatfromGenerator _generator;
     [SerializeField] private Movement _movement;
 
+    [Header("Camera")]
+    [SerializeField] private CameraGameplay _cameraGameplay;
+
     [Inject] private IInputPlayer _playerInput;
     [Inject] private IInputActivity _inputActivity;
 
@@ -64,5 +67,6 @@ public class IngameState : StateBase
     {
         Platform platform = _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
+        _cameraGameplay.LookAt(platform.Direction).Forget();
     }
 }

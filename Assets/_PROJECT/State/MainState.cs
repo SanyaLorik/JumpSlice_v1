@@ -13,8 +13,10 @@ public class MainState : StateBase
 
     [Header("States")]
     [SerializeField] private StateBase _ingameState;
-    [SerializeField] private CameraState _cameraState;
-    
+
+    [Header("Camera")]
+    [SerializeField] private CameraMenu _menu;
+
     private void Start()
     {
         Enter().Forget();
@@ -37,6 +39,9 @@ public class MainState : StateBase
     public override async UniTask Exit()
     {
         await _mainWindow.Hide();
+
+        _menu.StopAnimation();
+
         await _ingameState.Enter();
     }
 
@@ -47,6 +52,6 @@ public class MainState : StateBase
 
     private async UniTaskVoid StartMainAsync()
     {
-        _cameraState.CameraMenu();
+        _menu.StartAnimation();
     }
 }

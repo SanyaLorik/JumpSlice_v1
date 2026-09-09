@@ -9,10 +9,19 @@ public class CameraMenu : MonoBehaviour
     [SerializeField] private int _vibrato = 0;
     [SerializeField] float _randomness = 0;
 
+    private Tween _tween;
+
     public void StartAnimation()
     {
-        _camera
+        _tween?.Kill();
+
+        _tween = _camera
             .DOShakePosition(_duration, _strength, _vibrato, _randomness)
             .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void StopAnimation()
+    {
+        _tween?.Kill();
     }
 }
