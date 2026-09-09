@@ -25,6 +25,11 @@ public class Movement : MonoBehaviour
     private CancellationTokenSource _tokenSource;
     private Vector3 _currentTarget;
 
+    private UniTask _movingTask;
+
+    public bool IsMoving => _movingTask.Status.IsCompleted() == false;
+
+
     [ContextMenu("Create")]
     private void CreateInInspector()
     {
@@ -36,17 +41,19 @@ public class Movement : MonoBehaviour
         _tokenSource?.Cancel();
         _tokenSource?.Dispose();
 
-        MoveAsync(target, direction);
+        _tokenSource = new CancellationTokenSource();
+
+        MoveAsync(target, direction).Forget();
     }
 
     public void Move()
     {
-        _movementAnimation
+        _movingTask = _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height)
-            .Forget();
+            .ContinueWith(() => OnMoved?.Invoke());
     }
 
-    private async void MoveAsync(Vector3 target, Vector3 direction)
+    private async UniTaskVoid MoveAsync(Vector3 target, Vector3 direction)
     {
         while (_tokenSource.IsCancellationRequested == false)
         {

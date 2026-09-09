@@ -1,51 +1,37 @@
 using Architecture_M;
-using UnityEngine;
+using System;
 
-public class MobileInput : MobileInputBase<MobileInputView>, IOrbitalRotationInput, IActivityButtonPC
+public class MobileInput : MobileInputBase<MobileInputView>, IInputPlayer
 {
+    public event Action OnJumped;
+
     public MobileInput(MobileInputView inputView) : base(inputView)
     {
 
     }
 
-    public Vector2 OrbitalDirection => inputView.OrbitalDirection;
+    public override void Initialize()
+    {
+        inputView.OnUpped += OnJump;
+    }
+
+    public override void Dispose()
+    {
+        inputView.OnUpped -= OnJump;
+    }
 
     public override void Enable()
     {
-        inputView.JumpButton.onClick.AddListener(OnInvokedJump);
-
         inputView.Enable();
     }
 
     public override void Disable()
     {
-        inputView.JumpButton.onClick.RemoveListener(OnInvokedJump);
-
         inputView.Disable();
     }
 
-    private void OnInvokedJump()
+    private void OnJump()
     {
-        InvokeJump();
-    }
-
-    public void ShowJumpButton()
-    {
-        inputView.ShowJumpButton();
-    }
-
-    public void HideJumpButton()
-    {
-        inputView.HideJumpButton();
-    }
-
-    public void ShowOrbitalJoystick()
-    {
-        inputView.ShowOrbitalJoystick();
-    }
-
-    public void HidOrbitalJoystick()
-    {
-        inputView.HidOrbitalJoystick();
+        OnJumped?.Invoke();
     }
 }

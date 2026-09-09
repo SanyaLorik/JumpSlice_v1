@@ -13,29 +13,30 @@ public class IngameState : StateBase
     [SerializeField] private PlatfromGenerator _generator;
     [SerializeField] private Movement _movement;
 
-    [Inject] private IInputPlayer _input;
+    [Inject] private IInputPlayer _playerInput;
+    [Inject] private IInputActivity _inputActivity;
 
     private void OnEnable()
     {
-        _input.OnJumped += OnMove;
+        _playerInput.OnJumped += OnMove;
         _movement.OnMoved += OnNext;
     }
 
     private void OnDisable()
     {
-        _input.OnJumped -= OnMove;
+        _playerInput.OnJumped -= OnMove;
         _movement.OnMoved -= OnNext;
     }
 
     public override async UniTask Enter()
     {
-        _input.Disable();
+        _inputActivity.Disable();
 
         await _ingameWindow.Show();
 
         Next();
 
-        _input.Enable();
+        _inputActivity.Enable();
     }
 
     public override UniTask Exit()
@@ -55,7 +56,8 @@ public class IngameState : StateBase
 
     private void Move()
     {
-        _movement.Move();
+        if (_movement.IsMoving == false)
+            _movement.Move();
     }
 
     private void Next()

@@ -1,62 +1,32 @@
 using Architecture_M;
 using SanyaBeerExtension;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class MobileInputView : MobileInputViewBase
+public class MobileInputView : MobileInputViewBase, IPointerUpHandler, IPointerDownHandler
 {
-    [field: SerializeField] public Button JumpButton { get; private set; }
+    [SerializeField] private GameObject _touchPlace;
 
-    [SerializeField] private Joystick _orbitalMovement;
+    public event Action OnUpped;
 
-    public Vector2 OrbitalDirection
+    public void OnPointerUp(PointerEventData eventData)
     {
-        get
-        {
-            if (_orbitalMovement.Direction == _orbitalDirectionPrevious)
-            {
-                _orbitalDirectionPrevious = _orbitalMovement.Direction;
-                return Vector2.zero;
-            }
-
-            _orbitalDirectionPrevious = _orbitalMovement.Direction;
-            return _orbitalMovement.Direction;
-        }
+        OnUpped?.Invoke();
     }
 
-    private Vector2 _orbitalDirectionPrevious = Vector2.zero;
-
-    public override void Enable()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        base.Enable();
 
-        _orbitalMovement.ActiveSelf();
     }
 
-    public override void Disable()
+    public void Enable()
     {
-        base.Disable();
-
-        _orbitalMovement.DisactiveSelf();
+        _touchPlace.ActiveSelf();
     }
 
-    public void ShowJumpButton()
+    public void Disable()
     {
-        JumpButton.ActiveSelf();
-    }
-
-    public void HideJumpButton()
-    {
-        JumpButton.DisactiveSelf();
-    }
-
-    public void ShowOrbitalJoystick()
-    {
-        _orbitalMovement.ActiveSelf();
-    }
-
-    public void HidOrbitalJoystick()
-    {
-        _orbitalMovement.DisactiveSelf();
+        _touchPlace.DisactiveSelf();
     }
 }
