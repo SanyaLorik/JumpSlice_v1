@@ -7,7 +7,7 @@ public class PlatfromGenerator : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField] private PositionSpawner<Platform> _container;
-    [SerializeField] private Platform _prefab;
+    [SerializeField] private Platform[] _prefabs;
     [SerializeField] private Vector3[] _direction;
     [SerializeField] private Vector3 _initialDirection;
     [SerializeField] private PairedValue<float> _range;
@@ -49,8 +49,10 @@ public class PlatfromGenerator : MonoBehaviour
 
     private Platform Spawn()
     {
-        Platform platform = _container.Spawn(_prefab, _position);
-        platform.name = $"Platform_{_numberCounter}";
+        Platform prefab = _prefabs.GetRandomElement();
+
+        Platform platform = _container.Spawn(prefab, _position);
+        platform.name = $"{prefab.name}_{_numberCounter}";
 
         return platform;
     }

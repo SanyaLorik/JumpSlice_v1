@@ -19,6 +19,8 @@ public class IngameState : StateBase
     [Inject] private IInputPlayer _playerInput;
     [Inject] private IInputActivity _inputActivity;
 
+    private Platform _platform;
+
     private void OnEnable()
     {
         _playerInput.OnJumped += OnMove;
@@ -37,7 +39,7 @@ public class IngameState : StateBase
 
         await _ingameWindow.Show();
 
-        Next();
+        NextAsync();
 
         _inputActivity.Enable();
     }
@@ -54,7 +56,7 @@ public class IngameState : StateBase
 
     private void OnNext()
     {
-        Next();
+        NextAsync();
     }
 
     private void Move()
@@ -63,10 +65,18 @@ public class IngameState : StateBase
             _movement.Move();
     }
 
-    private void Next()
+    private async UniTask NextAsync()
     {
+        if (_platform != null)
+        {
+            if (_platform.HasBonus == true)
+                await _platform.ApplyAsync();
+        }
+
         Platform platform = _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
         _cameraGameplay.LookAt(platform.Direction).Forget();
+
+        _platform = platform;
     }
 }
