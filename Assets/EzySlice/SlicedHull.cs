@@ -25,11 +25,18 @@ namespace EzySlice {
 			GameObject newObject = CreateUpperHull();
 
 			if (newObject != null) {
-				newObject.transform.localPosition = original.transform.localPosition;
-				newObject.transform.localRotation = original.transform.localRotation;
-				newObject.transform.localScale = original.transform.localScale;
+                // оригинал
+                //newObject.transform.localPosition = original.transform.localPosition;
+                //newObject.transform.localRotation = original.transform.localRotation;
+                //newObject.transform.localScale = original.transform.localScale;
 
-				Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
+
+                // на мировые кординаты переделал
+                newObject.transform.position = original.transform.position;
+                newObject.transform.rotation = original.transform.rotation;
+                newObject.transform.localScale = original.transform.localScale;
+				//
+                Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
                 Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;
 
                 // nothing changed in the hierarchy, the cross section must have been batched
@@ -64,11 +71,17 @@ namespace EzySlice {
 			GameObject newObject = CreateLowerHull();
 
 			if (newObject != null) {
-				newObject.transform.localPosition = original.transform.localPosition;
-				newObject.transform.localRotation = original.transform.localRotation;
-				newObject.transform.localScale = original.transform.localScale;
+                // оригинал
+                //newObject.transform.localPosition = original.transform.localPosition;
+                //newObject.transform.localRotation = original.transform.localRotation;
+                //newObject.transform.localScale = original.transform.localScale;
 
-				Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
+                // переделка
+                newObject.transform.position = original.transform.position;
+                newObject.transform.rotation = original.transform.rotation;
+                newObject.transform.localScale = original.transform.localScale;
+
+                Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
                 Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;
 
                 // nothing changed in the hierarchy, the cross section must have been batched

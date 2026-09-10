@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using EzySlice;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -6,6 +8,7 @@ public class PlayerSlicer : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _player;
+    [SerializeField] private Material _material; 
     [SerializeField] private float _duration;
 
     [Header("Settings")]
@@ -58,8 +61,8 @@ public class PlayerSlicer : MonoBehaviour
         Vector3 targetWorldSize = new Vector3(targetSizeX, targetSizeY, targetSizeZ);
         Vector3 targetWorldPos = new Vector3(targetPosX, targetPosY, targetPosZ);
 
-        //ApplyWorldTransform(_player, targetWorldPos, targetWorldSize);
-        SmoothFitToPlatformAsync(platform);
+        ApplyWorldTransform(_player, targetWorldPos, targetWorldSize);
+        //SmoothFitToPlatformAsync(platform).Forget();
     }
 
     /// <summary>
@@ -79,6 +82,8 @@ public class PlayerSlicer : MonoBehaviour
         }
 
         _tokenSource = new();
+
+        Cross(platform);
         await SmoothConstrainAsync(platform);
     }
 
@@ -124,6 +129,115 @@ public class PlayerSlicer : MonoBehaviour
         ApplyWorldTransform(_player, targetWorldPos, targetWorldSize);
     }
 
+    private void Cross(Transform platform)
+    {
+        if (_player == null || platform == null)
+        {
+            Debug.LogWarning("Player or Platform is not assigned!");
+            return;
+        }
+
+        // Получаем размеры объектов с учетом scale (только X и Z)
+        Vector3 playerSize = _player.localScale;
+        Vector3 platformSize = platform.localScale;
+
+        // Получаем позиции объектов
+        Vector3 playerPos = _player.position;
+        Vector3 platformPos = platform.position;
+
+        // Вычисляем границы платформы по X и Z
+        float platformLeft = platformPos.x - platformSize.x / 2f;
+        float platformRight = platformPos.x + platformSize.x / 2f;
+        float platformBack = platformPos.z - platformSize.z / 2f;
+        float platformForward = platformPos.z + platformSize.z / 2f;
+
+        // Вычисляем границы игрока по X и Z
+        float playerLeft = playerPos.x - playerSize.x / 2f;
+        float playerRight = playerPos.x + playerSize.x / 2f;
+        float playerBack = playerPos.z - playerSize.z / 2f;
+        float playerForward = playerPos.z + playerSize.z / 2f;
+
+        // Список для точек на границе платформы
+        List<Vector3> edgePoints = new List<Vector3>();
+        List<Vector3> directionPoints = new List<Vector3>();
+
+        // Проверка по оси X
+        if (playerLeft < platformLeft)
+        {
+            // Точка на левой границе платформы
+            edgePoints.Add(new Vector3(platformLeft, playerPos.y, playerPos.z));
+            directionPoints.Add(Vector3.left);
+        }
+        if (playerRight > platformRight)
+        {
+            // Точка на правой границе платформы
+            edgePoints.Add(new Vector3(platformRight, playerPos.y, playerPos.z));
+            directionPoints.Add(Vector3.right);
+        }
+
+        // Проверка по оси Z
+        if (playerBack < platformBack)
+        {
+            // Точка на задней границе платформы
+            edgePoints.Add(new Vector3(playerPos.x, playerPos.y, platformBack));
+            directionPoints.Add(Vector3.back);
+        }
+        if (playerForward > platformForward)
+        {
+            // Точка на передней границе платформы
+            edgePoints.Add(new Vector3(playerPos.x, playerPos.y, platformForward));
+            directionPoints.Add(Vector3.forward);
+        }
+
+        SetupSliceHull(edgePoints, directionPoints);
+
+        // Преобразуем список в массив
+        //Vector3[] resultPoints = edgePoints.ToArray();
+
+        /*
+        // Выводим результат
+        if (resultPoints.Length > 0)
+        {
+            Debug.Log($"Player is OUTSIDE the platform boundaries!");
+            Debug.Log($"Platform X: [{platformLeft:F2}, {platformRight:F2}], Z: [{platformBack:F2}, {platformForward:F2}]");
+            Debug.Log($"Player X: [{playerLeft:F2}, {playerRight:F2}], Z: [{playerBack:F2}, {playerForward:F2}]");
+
+            // Выводим все точки
+            for (int i = 0; i < resultPoints.Length; i++)
+                Debug.Log($"Edge point {i + 1}: ({resultPoints[i].x:F2}, {resultPoints[i].y:F2}, {resultPoints[i].z:F2})");
+        }
+        else
+        {
+            Debug.Log("Player is INSIDE the platform boundaries.");
+        }
+        */
+    }
+
+    private void SetupSliceHull(IReadOnlyList<Vector3> points, IReadOnlyList<Vector3> directions)
+    {
+        int lenght = Mathf.Min(points.Count, directions.Count);
+        for (int i = 0; i < lenght; i++)
+        {
+            SlicedHull slicedHull = _player.gameObject.Slice(points[i], directions[i]);
+
+            GameObject lower = slicedHull.CreateLowerHull(_player.gameObject, _material);
+            GameObject upper = slicedHull.CreateUpperHull(_player.gameObject, _material);
+
+            float lowerDistance = (_player.position - lower.transform.position).sqrMagnitude;
+            float upperDistance = (_player.position - upper.transform.position).sqrMagnitude;
+
+            if (upperDistance > lowerDistance)
+            {
+                lower.AddComponent<Rigidbody>();
+                Destroy(upper);
+            }
+            else
+            {
+                upper.AddComponent<Rigidbody>();
+                Destroy(lower);
+            }
+        }
+    }
 
     // ==========================================
     // Вспомогательные методы

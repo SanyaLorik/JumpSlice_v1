@@ -11285,6 +11285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSlicer
   _player: {fileID: 1100742782}
+  _material: {fileID: 2100000, guid: bb0fdbeda394f904a8f6bdc8b5c9df2a, type: 2}
   _duration: 0.64
   _minScaleFactor: 0.1
   _platformDebug: {fileID: 896890659}
@@ -11957,6 +11958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSlicer
   _player: {fileID: 1770280478}
+  _material: {fileID: 0}
   _duration: 0
   _minScaleFactor: 0.1
   _platformDebug: {fileID: 0}
@@ -13102,6 +13104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSlicer
   _player: {fileID: 1883306410}
+  _material: {fileID: 0}
   _duration: 0
   _minScaleFactor: 0.1
   _platformDebug: {fileID: 0}
