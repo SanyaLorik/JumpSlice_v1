@@ -1,36 +1,42 @@
+using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
-using System.Collections;
 
 public class PlayerSlicer : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _player;
-    [SerializeField] private Transform _platform;
+    [SerializeField] private float _duration;
 
     [Header("Settings")]
     [Tooltip("Минимальный размер игрока, чтобы он не исчез полностью (0 = может исчезнуть)")]
     [SerializeField] private float _minScaleFactor = 0.1f;
 
+    [Header("Debug")]
+    [SerializeField] private Transform _platformDebug;
+
+    private CancellationTokenSource _tokenSource;
+
     [ContextMenu("Test Constrain")]
     public void TestConstrain()
     {
-        ConstrainPlayerToPlatform();
+        ConstrainPlayerToPlatform(_platformDebug);
     }
 
     /// <summary>
     /// Мгновенно подгоняет размер и позицию игрока под границы платформы.
     /// Игрок будет "обрезаться" или "сплющиваться" о края, оставаясь внутри.
     /// </summary>
-    public void ConstrainPlayerToPlatform()
+    public void ConstrainPlayerToPlatform(Transform platform)
     {
-        if (_player == null || _platform == null)
+        if (_player == null || platform == null)
         {
             Debug.LogWarning("Player or Platform is not assigned!");
             return;
         }
 
         Bounds playerBounds = GetWorldBounds(_player);
-        Bounds platformBounds = GetWorldBounds(_platform);
+        Bounds platformBounds = GetWorldBounds(platform);
 
         // --- Вычисляем пересечение по оси X ---
         float intersectMinX = Mathf.Max(playerBounds.min.x, platformBounds.min.x);
@@ -53,23 +59,33 @@ public class PlayerSlicer : MonoBehaviour
         Vector3 targetWorldPos = new Vector3(targetPosX, targetPosY, targetPosZ);
 
         //ApplyWorldTransform(_player, targetWorldPos, targetWorldSize);
-        SmoothFitToPlatform();
+        SmoothFitToPlatformAsync(platform);
     }
 
     /// <summary>
     /// Плавно уменьшает и перемещает игрока в границы платформы.
     /// </summary>
-    public void SmoothFitToPlatform(float duration = 2f)
+    public async UniTask SmoothFitToPlatformAsync(Transform platform)
     {
-        if (_player == null || _platform == null) return;
-        StopAllCoroutines();
-        StartCoroutine(SmoothConstrainCoroutine(duration));
+        if (_player == null || platform == null)
+            return;
+
+        if (_tokenSource != null)
+        {
+            _tokenSource.Cancel();
+            _tokenSource.Dispose();
+
+            _tokenSource = null;
+        }
+
+        _tokenSource = new();
+        await SmoothConstrainAsync(platform);
     }
 
-    private IEnumerator SmoothConstrainCoroutine(float duration)
+    private async UniTask SmoothConstrainAsync(Transform platform)
     {
         Bounds playerBounds = GetWorldBounds(_player);
-        Bounds platformBounds = GetWorldBounds(_platform);
+        Bounds platformBounds = GetWorldBounds(platform);
 
         Vector3 startWorldSize = playerBounds.size;
         Vector3 startPos = _player.position;
@@ -89,10 +105,10 @@ public class PlayerSlicer : MonoBehaviour
         Vector3 targetWorldPos = new Vector3(targetPosX, startPos.y, targetPosZ);
 
         float elapsed = 0f;
-        while (elapsed < duration)
+        while (elapsed < _duration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
+            float t = Mathf.Clamp01(elapsed / _duration);
 
             // Используем SmoothStep для более приятного визуального эффекта "сплющивания"
             float smoothT = Mathf.SmoothStep(0f, 1f, t);
@@ -101,12 +117,13 @@ public class PlayerSlicer : MonoBehaviour
             Vector3 currentWorldPos = Vector3.Lerp(startPos, targetWorldPos, smoothT);
 
             ApplyWorldTransform(_player, currentWorldPos, currentWorldSize);
-            yield return null;
+            await UniTask.Yield(cancellationToken: _tokenSource.Token);
         }
 
         // Финальная фиксация для гарантии точности
         ApplyWorldTransform(_player, targetWorldPos, targetWorldSize);
     }
+
 
     // ==========================================
     // Вспомогательные методы
@@ -119,10 +136,12 @@ public class PlayerSlicer : MonoBehaviour
     private Bounds GetWorldBounds(Transform t)
     {
         Collider col = t.GetComponent<Collider>();
-        if (col != null) return col.bounds;
+        if (col != null) 
+            return col.bounds;
 
         Renderer rend = t.GetComponent<Renderer>();
-        if (rend != null) return rend.bounds;
+        if (rend != null)
+            return rend.bounds;
 
         // Если нет ни коллайдера, ни рендера, используем lossyScale (мировой масштаб)
         // Это работает корректно, только если базовая модель имеет размер 1x1x1

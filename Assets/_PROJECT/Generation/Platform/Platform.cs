@@ -5,6 +5,7 @@ using UnityEngine;
 public class Platform : MonoBehaviour, IPlatfromBonus
 {
     [field: SerializeField] public Transform Target { get; private set; }
+    [field: SerializeField] public Transform SlicePattern { get; private set; }
     [SerializeField] private TextMeshPro _numberText;
 
     [field: SerializeField] public bool HasBonus { get; private set; }

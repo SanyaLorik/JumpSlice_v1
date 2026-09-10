@@ -12,6 +12,7 @@ public class IngameState : StateBase
     [Header("Gameplay")]
     [SerializeField] private PlatfromGenerator _generator;
     [SerializeField] private Movement _movement;
+    [SerializeField] private PlayerSlicer _playerSlicer;
 
     [Header("Camera")]
     [SerializeField] private CameraGameplay _cameraGameplay;
@@ -39,7 +40,7 @@ public class IngameState : StateBase
 
         await _ingameWindow.Show();
 
-        NextAsync();
+        NextAsync().Forget();
 
         _inputActivity.Enable();
     }
@@ -56,7 +57,7 @@ public class IngameState : StateBase
 
     private void OnNext()
     {
-        NextAsync();
+        NextAsync().Forget();
     }
 
     private void Move()
@@ -67,15 +68,21 @@ public class IngameState : StateBase
 
     private async UniTask NextAsync()
     {
+        _inputActivity.Disable();
+
         if (_platform != null)
         {
+            await _playerSlicer.SmoothFitToPlatformAsync(_platform.SlicePattern);
+
             if (_platform.HasBonus == true)
                 await _platform.ApplyAsync();
         }
 
         Platform platform = _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
-        _cameraGameplay.LookAt(platform.Direction).Forget();
+        await _cameraGameplay.LookAt(platform.Direction);
+
+        _inputActivity.Enable();
 
         _platform = platform;
     }

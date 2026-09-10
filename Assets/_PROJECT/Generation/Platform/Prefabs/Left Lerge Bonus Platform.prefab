@@ -345,6 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platform
   <Target>k__BackingField: {fileID: 7611432807610635463}
+  <SlicePattern>k__BackingField: {fileID: 3874693598946427871}
   _numberText: {fileID: 2667549103473143755}
   <HasBonus>k__BackingField: 1
 --- !u!1 &6078971430394352572
