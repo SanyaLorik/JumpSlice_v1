@@ -11187,6 +11187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced6aacacd34dec46aafbb6a168d79a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrajectoryAnimation
+  _center: {fileID: 1100742782}
   _line: {fileID: 2123650955}
   _final: {fileID: 0}
   _countPoint: 16
@@ -11267,9 +11268,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _range:
-    <From>k__BackingField: -1
-    <To>k__BackingField: 1
-  _durationRange: 2
+    <From>k__BackingField: -1.4
+    <To>k__BackingField: 1.4
+  _durationRange: 0.72
   _movementAnimation: {fileID: 1608469283}
   _trajectoryAnimation: {fileID: 1608469284}
 --- !u!114 &1608469286

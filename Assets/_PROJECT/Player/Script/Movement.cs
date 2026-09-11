@@ -81,7 +81,10 @@ public class Movement : MonoBehaviour
             float lerp = _lineEase.Evaluate(t);
 
             _currentTarget = Vector3.Lerp(from, to, lerp);
-            _trajectoryAnimation.CreateLine(_player.position, _currentTarget, _trajectory, _height);
+
+            await UniTask.WaitWhile(() => IsMoving == true, cancellationToken: _tokenSource.Token);
+
+            _trajectoryAnimation.CreateLine(_currentTarget, _trajectory, _height);
 
             expendedTime += Time.deltaTime;
 

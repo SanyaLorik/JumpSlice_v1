@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TrajectoryAnimation : MonoBehaviour
 {
+    [SerializeField] private Transform _center;
     [SerializeField] private LineRenderer _line;
 
     [Header("Debug")]
@@ -57,14 +58,14 @@ public class TrajectoryAnimation : MonoBehaviour
         material.DOFade(0, float.MinValue);
     }
 
-    public void CreateLine(Vector3 source, Vector3 target, AnimationCurve trajectory, float height)
+    public void CreateLine(Vector3 target, AnimationCurve trajectory, float height)
     {
         Vector3[] positions = new Vector3[_countPoint + 1];
 
         for (int i = 0; i <= _countPoint; i++)
         {
             float t = (float)i / (float)_countPoint;
-            Vector3 horizontalPosition = Vector3.Lerp(source, target, t);
+            Vector3 horizontalPosition = Vector3.Lerp(_center.position, target, t);
 
             float heightOffset = trajectory.Evaluate(t) * height;
             Vector3 verticalOffset = Vector3.up * heightOffset;

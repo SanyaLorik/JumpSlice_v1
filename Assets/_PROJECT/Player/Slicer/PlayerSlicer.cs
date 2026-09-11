@@ -189,7 +189,15 @@ public class PlayerSlicer : MonoBehaviour
             directionPoints.Add(Vector3.forward);
         }
 
-        SetupSliceHull(edgePoints, directionPoints);
+        int lenght = Mathf.Min(edgePoints.Count, directionPoints.Count);
+         if (lenght < 4)
+        {
+            SetupSliceHull(edgePoints, directionPoints);
+        }
+        else
+        {
+            Debug.Log("Whole parts of player are killed!");
+        }
 
         // Преобразуем список в массив
         //Vector3[] resultPoints = edgePoints.ToArray();
