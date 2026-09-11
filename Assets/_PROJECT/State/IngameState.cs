@@ -17,6 +17,9 @@ public class IngameState : StateBase
     [Header("Camera")]
     [SerializeField] private CameraGameplay _cameraGameplay;
 
+    [Header("MiniTutorial")]
+    [SerializeField] private MiniTutorial _miniTutorial;
+
     [Inject] private IInputPlayer _playerInput;
     [Inject] private IInputActivity _inputActivity;
 
@@ -37,6 +40,8 @@ public class IngameState : StateBase
     public override async UniTask Enter()
     {
         _inputActivity.Disable();
+
+        _miniTutorial.StartTutorial();
 
         await _ingameWindow.Show();
 
@@ -62,8 +67,11 @@ public class IngameState : StateBase
 
     private void Move()
     {
-        if (_movement.IsMoving == false)
-            _movement.Move();
+        if (_movement.IsMoving == true)
+            return;
+        
+        _movement.Move();
+        _miniTutorial.StopTutorial();
     }
 
     private async UniTask NextAsync()
