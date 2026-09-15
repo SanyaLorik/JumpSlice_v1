@@ -25,6 +25,7 @@ public class MainState : StateBase
 
     [Header("Player")]
     [SerializeField] private PlayerRebuilder _playerRebuilder;
+    [SerializeField] private PlatfromGenerator _platfromGenerator;
 
     private void Start()
     {
@@ -52,6 +53,7 @@ public class MainState : StateBase
         _playerRebuilder.Zero();
 
         await _cameraMenu.ReturnCamera();
+        await _platfromGenerator.DestroyAll();
         await _mainWindow.Show();
 
         await _playerRebuilder.Rebuild();

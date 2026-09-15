@@ -1,4 +1,7 @@
+using Cysharp.Threading.Tasks;
+using NUnit.Framework;
 using SanyaBeerExtension;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatfromGenerator : MonoBehaviour
@@ -11,16 +14,16 @@ public class PlatfromGenerator : MonoBehaviour
     [SerializeField] private Vector3[] _direction;
     [SerializeField] private Vector3 _initialDirection;
     [SerializeField] private PairedValue<float> _range;
+    [SerializeField] private int _countAnimationDestroy;
+
+    private const int _initialNumberCount = 1;
 
     private Vector3 _position;
-    public int NumberCounter { get; private set; } = 1;
+    public int NumberCounter { get; private set; } = _initialNumberCount;
 
-    private void Start()
-    {
-        _position = _initalPlatform.transform.position;
-    }
+    private List<Platform> _platforms = new(16);
 
-    public Platform Generate()
+    public async UniTask<Platform> Generate()
     {
         Vector3 direction = CalculateNewPositionAndReturnDirection();
 
@@ -28,9 +31,36 @@ public class PlatfromGenerator : MonoBehaviour
         platform.SetNumber(NumberCounter);
         platform.SetDirection(direction);
 
+        await platform.AppearanceAnimation();
+
+        _platforms.Add(platform);
+
         NumberCounter++;
 
         return platform;
+    }
+
+    public async UniTask DestroyAll()
+    {
+        ResetPosition();
+
+        if (_platforms.Count == 0)
+        {
+            await UniTask.CompletedTask;
+            return;
+        }
+
+        for (int i = 0; i < _platforms.Count; i++)
+        {
+            if (i < _countAnimationDestroy)
+                await _platforms[i].DestroyAnimation();
+            else
+                _platforms[i].DestoryNoAnimation();
+        }
+
+        _platforms.Clear();
+
+        NumberCounter = _initialNumberCount;
     }
 
     private Vector3 CalculateNewPositionAndReturnDirection()
@@ -45,6 +75,11 @@ public class PlatfromGenerator : MonoBehaviour
         _position += offset;
 
         return direction;
+    }
+
+    private void ResetPosition()
+    {
+        _position = _initalPlatform.transform.position;
     }
 
     private Platform Spawn()

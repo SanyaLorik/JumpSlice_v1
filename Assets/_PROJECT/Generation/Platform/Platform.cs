@@ -1,4 +1,7 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using SanyaBeerExtension;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +12,9 @@ public class Platform : MonoBehaviour, IPlatfromBonus
     [SerializeField] private TextMeshPro _numberText;
 
     [field: SerializeField] public bool HasBonus { get; private set; }
+
+    [SerializeField] private ParametrBase<Transform> _appearanceAnimation;
+    [SerializeField] private ParametrBase<Transform> _destroyAnimation;
 
     public Vector3 Direction { get; private set; }
 
@@ -25,5 +31,32 @@ public class Platform : MonoBehaviour, IPlatfromBonus
     public async UniTask ApplyAsync()
     {
         await BonusService.Instance.Large();
+    }
+
+    public async UniTask AppearanceAnimation()
+    {
+        _destroyAnimation.Source.localScale = Vector2.zero;
+
+        await _destroyAnimation.Source
+            .DOScale(Vector3.one, _destroyAnimation.Duration)
+            .SetEase(_destroyAnimation.Ease)
+            .AsyncWaitForCompletion()
+            .AsUniTask();
+    }
+
+    public async UniTask DestroyAnimation()
+    {
+        await _destroyAnimation.Source
+            .DOScale(Vector3.zero, _destroyAnimation.Duration)
+            .SetEase(_destroyAnimation.Ease)
+            .AsyncWaitForCompletion()
+            .AsUniTask();
+
+        DestoryNoAnimation();
+    }
+
+    public void DestoryNoAnimation()
+    {
+        Destroy(gameObject);
     }
 }

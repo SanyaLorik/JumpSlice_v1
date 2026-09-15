@@ -104,7 +104,7 @@ public class IngameState : StateBase
                 await _platform.ApplyAsync();
         }
 
-        Platform platform = _generator.Generate();
+        Platform platform = await _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
 
         await _cameraGameplay.LookAt(platform.Direction);

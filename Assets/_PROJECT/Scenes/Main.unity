@@ -357,6 +357,7 @@ MonoBehaviour:
   _shopState: {fileID: 606103620}
   _cameraMenu: {fileID: 1795100381}
   _playerRebuilder: {fileID: 639272688}
+  _platfromGenerator: {fileID: 283048050}
 --- !u!1 &68419282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,6 +1980,7 @@ MonoBehaviour:
   _range:
     <From>k__BackingField: 4
     <To>k__BackingField: 4
+  _countAnimationDestroy: 6
 --- !u!4 &283048051
 Transform:
   m_ObjectHideFlags: 0
@@ -8766,7 +8768,7 @@ MonoBehaviour:
   <IsAutoStart>k__BackingField: 0
   _value: 1
   _initial: 0
-  _delayBeforeAnimation: 1.4
+  _delayBeforeAnimation: 1
 --- !u!225 &1184316549
 CanvasGroup:
   m_ObjectHideFlags: 0

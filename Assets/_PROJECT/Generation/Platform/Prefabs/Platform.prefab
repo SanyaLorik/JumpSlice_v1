@@ -346,6 +346,14 @@ MonoBehaviour:
   <SlicePattern>k__BackingField: {fileID: 3874693598946427871}
   _numberText: {fileID: 2667549103473143755}
   <HasBonus>k__BackingField: 0
+  _appearanceAnimation:
+    <Source>k__BackingField: {fileID: 7877141071012941500}
+    <Duration>k__BackingField: 1
+    <Ease>k__BackingField: 30
+  _destroyAnimation:
+    <Source>k__BackingField: {fileID: 7877141071012941500}
+    <Duration>k__BackingField: 0.32
+    <Ease>k__BackingField: 2
 --- !u!1 &6078971430394352572
 GameObject:
   m_ObjectHideFlags: 0
