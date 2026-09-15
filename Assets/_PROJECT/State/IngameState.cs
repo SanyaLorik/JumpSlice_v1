@@ -1,6 +1,6 @@
 using Architecture_M;
 using Cysharp.Threading.Tasks;
-using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -9,10 +9,16 @@ public class IngameState : StateBase
     [Header("Window")]
     [SerializeField] private WindowBase _ingameWindow;
 
+    [Header("States")]
+    [SerializeField] private StateBase _gameOverState;
+
     [Header("Gameplay")]
     [SerializeField] private PlatfromGenerator _generator;
     [SerializeField] private Movement _movement;
     [SerializeField] private PlayerSlicer _playerSlicer;
+
+    [Header("Award")]
+    [SerializeField] private IngameMoney _ingameMoney;
 
     [Header("Camera")]
     [SerializeField] private CameraGameplay _cameraGameplay;
@@ -50,9 +56,12 @@ public class IngameState : StateBase
         _inputActivity.Enable();
     }
 
-    public override UniTask Exit()
+    public override async UniTask Exit()
     {
-        throw new();
+        _inputActivity.Disable();
+
+        await _ingameWindow.Hide();
+        await _gameOverState.Enter();
     }
 
     private void OnMove()
@@ -80,7 +89,15 @@ public class IngameState : StateBase
 
         if (_platform != null)
         {
-            await _playerSlicer.SmoothFitToPlatformAsync(_platform.SlicePattern);
+            bool isExpired = await _playerSlicer.SmoothFitToPlatformAsync(_platform.SlicePattern);
+
+            if (isExpired == true)
+            {
+                await Exit();
+                return;
+            }
+
+            _ingameMoney.AddMoney(_generator.NumberCounter);
 
             if (_platform.HasBonus == true)
                 await _platform.ApplyAsync();
@@ -88,6 +105,7 @@ public class IngameState : StateBase
 
         Platform platform = _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
+
         await _cameraGameplay.LookAt(platform.Direction);
 
         _inputActivity.Enable();

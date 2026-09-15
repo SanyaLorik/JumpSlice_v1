@@ -1986,6 +1986,7 @@ Transform:
   m_Children:
   - {fileID: 65637539}
   - {fileID: 854433065}
+  - {fileID: 1074761750}
   m_Father: {fileID: 360952959}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &289017177
@@ -1997,6 +1998,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 289017178}
+  - component: {fileID: 289017180}
+  - component: {fileID: 289017179}
   m_Layer: 0
   m_Name: Game Over
   m_TagString: Untagged
@@ -2028,6 +2031,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &289017179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289017177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccd9b64cceeac849911595ae91a2392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.WindowAnimation
+  window: {fileID: 289017177}
+  _canvasGroup: {fileID: 289017180}
+  _shownEase: 0
+  _shownDuration: 1
+  _hiddenEase: 0
+  _hiddenDuration: 1
+--- !u!225 &289017180
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289017177}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &300671722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,6 +3491,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410989591}
   m_CullTransparentMesh: 1
+--- !u!1 &414167921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 414167922}
+  - component: {fileID: 414167923}
+  m_Layer: 0
+  m_Name: IngameWallet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &414167922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414167921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1272121243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &414167923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414167921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf144249329f9e49a9ea9efbf170c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wallet
+  _count: 0
 --- !u!1 &421603585
 GameObject:
   m_ObjectHideFlags: 0
@@ -6717,9 +6795,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngameState
   _ingameWindow: {fileID: 300671725}
+  _gameOverState: {fileID: 1074761751}
   _generator: {fileID: 283048050}
   _movement: {fileID: 1608469285}
   _playerSlicer: {fileID: 1608469286}
+  _ingameMoney: {fileID: 1272121244}
   _cameraGameplay: {fileID: 768254570}
   _miniTutorial: {fileID: 178748224}
 --- !u!1 &870423783
@@ -7576,6 +7656,51 @@ RectTransform:
   m_AnchoredPosition: {x: 228, y: -80}
   m_SizeDelta: {x: 404, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1074761749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1074761750}
+  - component: {fileID: 1074761751}
+  m_Layer: 0
+  m_Name: GameOver State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1074761750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074761749}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 286566742}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1074761751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074761749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638b2c6715b5d5646873be964ff3c520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverState
+  _gameOverWindow: {fileID: 289017179}
 --- !u!1 &1092603752
 GameObject:
   m_ObjectHideFlags: 0
@@ -8730,6 +8855,52 @@ Transform:
   - {fileID: 81402700}
   m_Father: {fileID: 1883306410}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1272121242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272121243}
+  - component: {fileID: 1272121244}
+  m_Layer: 0
+  m_Name: IngameMoney
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272121243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272121242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 414167922}
+  m_Father: {fileID: 1316826062}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272121244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272121242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d00fb2039d9ad45b67fcc4501daae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IngameMoney
+  _ingameWallet: {fileID: 414167923}
 --- !u!1 &1282045161
 GameObject:
   m_ObjectHideFlags: 0
@@ -9092,6 +9263,7 @@ Transform:
   - {fileID: 283048051}
   - {fileID: 159907072}
   - {fileID: 178748223}
+  - {fileID: 1272121243}
   m_Father: {fileID: 360952959}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338851159
@@ -11185,6 +11357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrajectoryAnimation
   _center: {fileID: 1100742782}
   _line: {fileID: 2123650955}
+  _offset: {x: 0, y: 1, z: 0}
   _final: {fileID: 0}
   _countPoint: 16
   _isStartHide: 1

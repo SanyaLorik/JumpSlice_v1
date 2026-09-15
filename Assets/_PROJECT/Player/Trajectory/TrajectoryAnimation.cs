@@ -7,6 +7,7 @@ public class TrajectoryAnimation : MonoBehaviour
 {
     [SerializeField] private Transform _center;
     [SerializeField] private LineRenderer _line;
+    [SerializeField] private Vector3 _offset = new(0, 1, 0);
 
     [Header("Debug")]
     [SerializeField] private Transform _final;
@@ -70,7 +71,7 @@ public class TrajectoryAnimation : MonoBehaviour
             float heightOffset = trajectory.Evaluate(t) * height;
             Vector3 verticalOffset = Vector3.up * heightOffset;
 
-            positions[i] = horizontalPosition + verticalOffset;
+            positions[i] = horizontalPosition + verticalOffset + _offset;
         }
 
         _line.SetPositions(positions);

@@ -68,10 +68,10 @@ public class PlayerSlicer : MonoBehaviour
     /// <summary>
     /// Плавно уменьшает и перемещает игрока в границы платформы.
     /// </summary>
-    public async UniTask SmoothFitToPlatformAsync(Transform platform)
+    public async UniTask<bool> SmoothFitToPlatformAsync(Transform platform)
     {
         if (_player == null || platform == null)
-            return;
+            return false;
 
         if (_tokenSource != null)
         {
@@ -83,8 +83,13 @@ public class PlayerSlicer : MonoBehaviour
 
         _tokenSource = new();
 
-        Cross(platform);
+        bool isExpired = Cross(platform);
+        if (isExpired == true)
+            return true;
+
         await SmoothConstrainAsync(platform);
+
+        return false;
     }
 
     private async UniTask SmoothConstrainAsync(Transform platform)
@@ -129,12 +134,12 @@ public class PlayerSlicer : MonoBehaviour
         ApplyWorldTransform(_player, targetWorldPos, targetWorldSize);
     }
 
-    private void Cross(Transform platform)
+    private bool Cross(Transform platform)
     {
         if (_player == null || platform == null)
         {
-            Debug.LogWarning("Player or Platform is not assigned!");
-            return;
+            //Debug.LogWarning("Player or Platform is not assigned!");
+            throw new("Player or Platform is not assigned!");
         }
 
         // Получаем размеры объектов с учетом scale (только X и Z)
@@ -156,6 +161,16 @@ public class PlayerSlicer : MonoBehaviour
         float playerRight = playerPos.x + playerSize.x / 2f;
         float playerBack = playerPos.z - playerSize.z / 2f;
         float playerForward = playerPos.z + playerSize.z / 2f;
+
+        // === ПРОВЕРКА: куб полностью вне платформы ===
+        bool fullyOutsideX = playerRight < platformLeft || playerLeft > platformRight;
+        bool fullyOutsideZ = playerForward < platformBack || playerBack > platformForward;
+
+        if (fullyOutsideX || fullyOutsideZ)
+        {
+            Debug.Log("Whole cube is outside the platform!");
+            return true;
+        }
 
         // Список для точек на границе платформы
         List<Vector3> edgePoints = new List<Vector3>();
@@ -189,16 +204,21 @@ public class PlayerSlicer : MonoBehaviour
             directionPoints.Add(Vector3.forward);
         }
 
+        SetupSliceHull(edgePoints, directionPoints);
+        return false;
+        /*
         int lenght = Mathf.Min(edgePoints.Count, directionPoints.Count);
          if (lenght < 4)
         {
             SetupSliceHull(edgePoints, directionPoints);
+            return false;
         }
         else
         {
             Debug.Log("Whole parts of player are killed!");
+            return true;
         }
-
+        */
         // Преобразуем список в массив
         //Vector3[] resultPoints = edgePoints.ToArray();
 

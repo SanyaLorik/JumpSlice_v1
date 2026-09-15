@@ -2,11 +2,15 @@ using Architecture_M;
 using LuringPlayer_M;
 using MediaKit_M.SkinChanger;
 using System;
+using UnityEngine;
 
 [Serializable]
 public class GameSave : GameSaveBase,
     IDailyRewardSaveLoader, IWheelFortuneSaveLoader, IDailyQuestSaveLoader, ISkinSaveLoader, ICommunitySaveLoader
 {
+    [Header("Economy")]
+    public int LevelId;
+
     public DailyRewardSave DailyRewardSave;
     public WheelFortuneSave WheelFortuneSave;
     public DailyQuestSave DailyQuestSave;

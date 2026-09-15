@@ -13,7 +13,7 @@ public class PlatfromGenerator : MonoBehaviour
     [SerializeField] private PairedValue<float> _range;
 
     private Vector3 _position;
-    private int _numberCounter = 1;
+    public int NumberCounter { get; private set; } = 1;
 
     private void Start()
     {
@@ -25,10 +25,10 @@ public class PlatfromGenerator : MonoBehaviour
         Vector3 direction = CalculateNewPositionAndReturnDirection();
 
         Platform platform = Spawn();
-        platform.SetNumber(_numberCounter);
+        platform.SetNumber(NumberCounter);
         platform.SetDirection(direction);
 
-        _numberCounter++;
+        NumberCounter++;
 
         return platform;
     }
@@ -36,7 +36,7 @@ public class PlatfromGenerator : MonoBehaviour
     private Vector3 CalculateNewPositionAndReturnDirection()
     {
         Vector3 direction = _direction.GetRandomElement();
-        if (_numberCounter == 1)
+        if (NumberCounter == 1)
             direction = _initialDirection;
 
         float distance = UnityEngine.Random.Range(_range.From, _range.To);
@@ -52,7 +52,7 @@ public class PlatfromGenerator : MonoBehaviour
         Platform prefab = _prefabs.GetRandomElement();
 
         Platform platform = _container.Spawn(prefab, _position);
-        platform.name = $"{prefab.name}_{_numberCounter}";
+        platform.name = $"{prefab.name}_{NumberCounter}";
 
         return platform;
     }
