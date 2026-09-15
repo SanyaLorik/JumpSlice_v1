@@ -11392,6 +11392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   _player: {fileID: 1608469279}
+  _slicedCube: {fileID: 1100742782}
   _trajectory:
     serializedVersion: 2
     m_Curve:

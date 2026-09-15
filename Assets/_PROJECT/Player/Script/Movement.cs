@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private Transform _player;
+    [SerializeField] private Transform _slicedCube;
     [SerializeField] private AnimationCurve _trajectory;
     [SerializeField] private float _height;
 
@@ -57,6 +58,12 @@ public class Movement : MonoBehaviour
             .ContinueWith(() => OnMoved?.Invoke());
     }
 
+    public void OffsetPlayer()
+    {
+        _player.localPosition += _slicedCube.localPosition;
+        _slicedCube.localPosition = Vector3.zero;
+    }
+
     private async UniTaskVoid MoveTargetAsync(Vector3 target, Vector3 direction)
     {
         while (_tokenSource.IsCancellationRequested == false)
@@ -90,6 +97,6 @@ public class Movement : MonoBehaviour
 
             await UniTask.Yield(cancellationToken: _tokenSource.Token);
         }
-        while (expendedTime < _durationRange && _tokenSource.IsCancellationRequested == false);
+        while (expendedTime <= _durationRange && _tokenSource.IsCancellationRequested == false);
     }
 }

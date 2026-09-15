@@ -90,6 +90,7 @@ public class IngameState : StateBase
         if (_platform != null)
         {
             bool isExpired = await _playerSlicer.SmoothFitToPlatformAsync(_platform.SlicePattern);
+            _movement.OffsetPlayer();
 
             if (isExpired == true)
             {

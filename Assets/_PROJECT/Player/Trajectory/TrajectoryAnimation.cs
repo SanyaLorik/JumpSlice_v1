@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using SanyaBeerExtension;
 using UnityEngine;
 
 public class TrajectoryAnimation : MonoBehaviour
