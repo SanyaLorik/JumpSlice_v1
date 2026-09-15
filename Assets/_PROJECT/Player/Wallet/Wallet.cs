@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-    [SerializeField] private int _count;
+    [field: SerializeField] public int Count { get; private set; }
 
     public Action<int> OnChanged;
 
@@ -19,12 +19,12 @@ public class Wallet : MonoBehaviour
 
     public void Clear()
     {
-        Change(-_count);
+        Change(-Count);
     }
 
     private void Change(int count)
     {
-        _count += count;
-        OnChanged?.Invoke(_count);
+        Count += count;
+        OnChanged?.Invoke(Count);
     }
 }

@@ -1,6 +1,5 @@
 using Architecture_M;
 using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +17,7 @@ public class IngameState : StateBase
     [SerializeField] private PlayerSlicer _playerSlicer;
 
     [Header("Award")]
-    [SerializeField] private IngameMoney _ingameMoney;
+    [SerializeField] private IngameResourse _ingameResours;
 
     [Header("Camera")]
     [SerializeField] private CameraGameplay _cameraGameplay;
@@ -46,6 +45,8 @@ public class IngameState : StateBase
     public override async UniTask Enter()
     {
         _inputActivity.Disable();
+
+        _ingameResours.ResetResourse();
 
         _miniTutorial.StartTutorial();
 
@@ -98,7 +99,8 @@ public class IngameState : StateBase
                 return;
             }
 
-            _ingameMoney.AddMoney(_generator.NumberCounter);
+            _ingameResours.AddMoney();
+            _ingameResours.AddPlatform();
 
             if (_platform.HasBonus == true)
                 await _platform.ApplyAsync();

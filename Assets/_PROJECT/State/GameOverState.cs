@@ -8,11 +8,18 @@ public class GameOverState : StateBase
     [Header("Window")]
     [SerializeField] private WindowBase _gameOverWindow;
 
+    [Header("Ui")]
+    [SerializeField] private UiGameOver _uiGameOver;
+
     [Header("Managment")]
     [SerializeField] private Button _continueButton;
 
     [Header("States")]
     [SerializeField] private StateBase _menuState;
+
+    [Header("Wallets")]
+    [SerializeField] private Wallet _moneyWallet;
+    [SerializeField] private Wallet _recordWallet;
 
     [Header("Animation")]
     [SerializeField] private DOTweenAnimationGenericBase<CanvasGroup> _continueAnimtion;
@@ -30,6 +37,9 @@ public class GameOverState : StateBase
     public override async UniTask Enter()
     {
         _continueAnimtion.ResetToInitialState();
+
+        _uiGameOver.SetMoney(_moneyWallet.Count);
+        _uiGameOver.SetRecord(_recordWallet.Count);
 
         await _gameOverWindow.Show();
 

@@ -302,6 +302,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25618244}
   m_CullTransparentMesh: 1
+--- !u!1 &50997423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 50997424}
+  - component: {fileID: 50997425}
+  m_Layer: 0
+  m_Name: IngameRecord
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &50997424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50997423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1272121243}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &50997425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50997423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf144249329f9e49a9ea9efbf170c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wallet
+  <Count>k__BackingField: 0
 --- !u!1 &65637538
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +756,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108335521}
   m_CullTransparentMesh: 1
+--- !u!1 &137258912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137258913}
+  m_Layer: 0
+  m_Name: Ui
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &137258913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137258912}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2052031422}
+  - {fileID: 1371707493}
+  m_Father: {fileID: 360952959}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &142169077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3119,6 +3197,7 @@ Transform:
   - {fileID: 749518683}
   - {fileID: 286566742}
   - {fileID: 1316826062}
+  - {fileID: 137258913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &390989443
@@ -3624,7 +3703,7 @@ GameObject:
   - component: {fileID: 414167922}
   - component: {fileID: 414167923}
   m_Layer: 0
-  m_Name: IngameWallet
+  m_Name: IngameMoney
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3657,7 +3736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf144249329f9e49a9ea9efbf170c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wallet
-  _count: 0
+  <Count>k__BackingField: 0
 --- !u!1 &421603585
 GameObject:
   m_ObjectHideFlags: 0
@@ -7044,7 +7123,7 @@ MonoBehaviour:
   _generator: {fileID: 283048050}
   _movement: {fileID: 1608469285}
   _playerSlicer: {fileID: 1608469286}
-  _ingameMoney: {fileID: 1272121244}
+  _ingameResours: {fileID: 1272121244}
   _cameraGameplay: {fileID: 1084577388}
   _miniTutorial: {fileID: 178748224}
 --- !u!1 &870423783
@@ -7978,8 +8057,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverState
   _gameOverWindow: {fileID: 289017179}
+  _uiGameOver: {fileID: 1371707494}
   _continueButton: {fileID: 1184316545}
   _menuState: {fileID: 65637540}
+  _moneyWallet: {fileID: 414167923}
+  _recordWallet: {fileID: 50997425}
   _continueAnimtion: {fileID: 1184316548}
 --- !u!1 &1084577386
 GameObject:
@@ -9211,7 +9293,7 @@ GameObject:
   - component: {fileID: 1272121243}
   - component: {fileID: 1272121244}
   m_Layer: 0
-  m_Name: IngameMoney
+  m_Name: IngameResourse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9231,6 +9313,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 414167922}
+  - {fileID: 50997424}
   m_Father: {fileID: 1316826062}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272121244
@@ -9245,7 +9328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d00fb2039d9ad45b67fcc4501daae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngameMoney
-  _ingameWallet: {fileID: 414167923}
+  _uiIngame: {fileID: 2052031423}
+  _money: {fileID: 414167923}
+  _record: {fileID: 50997425}
 --- !u!1 &1282045161
 GameObject:
   m_ObjectHideFlags: 0
@@ -9901,6 +9986,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353721637}
   m_CullTransparentMesh: 1
+--- !u!1 &1371707492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1371707493}
+  - component: {fileID: 1371707494}
+  m_Layer: 0
+  m_Name: UiGameOver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1371707493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371707492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 137258913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371707494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371707492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ff2d4ab8c2b494884b6b56aab83466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiGameOver
+  _recordText: {fileID: 178676796}
+  _moneyText: {fileID: 1593073077}
 --- !u!1 &1380845498
 GameObject:
   m_ObjectHideFlags: 0
@@ -11177,7 +11308,7 @@ GameObject:
   - component: {fileID: 1593073078}
   - component: {fileID: 1593073077}
   m_Layer: 0
-  m_Name: X2 Text
+  m_Name: Money Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14943,6 +15074,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 13494734}
   m_LocalEulerAnglesHint: {x: 45, y: -38, z: 0}
+--- !u!1 &2052031421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2052031422}
+  - component: {fileID: 2052031423}
+  m_Layer: 0
+  m_Name: UiIngame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2052031422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052031421}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 137258913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2052031423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052031421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e597d12797fec54c9b9ede1096cff4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiIngame
+  _recordText: {fileID: 1504769003}
+  _moneyText: {fileID: 472830626}
 --- !u!1 &2053113403
 GameObject:
   m_ObjectHideFlags: 0

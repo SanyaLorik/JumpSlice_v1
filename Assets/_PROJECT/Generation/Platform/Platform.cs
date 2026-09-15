@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SanyaBeerExtension;
-using System;
 using TMPro;
 using UnityEngine;
 
