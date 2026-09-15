@@ -1,6 +1,5 @@
 using Architecture_M;
 using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,12 +21,16 @@ public class MainState : StateBase
     [SerializeField] private StateBase _shopState;
 
     [Header("Camera")]
-    [SerializeField] private CameraMenu _menu;
+    [SerializeField] private CameraMenu _cameraMenu;
+
+    [Header("Player")]
+    [SerializeField] private PlayerRebuilder _playerRebuilder;
 
     private void Start()
     {
         Enter().Forget();
     }
+
     private void OnEnable()
     {
         _startButton.onClick.AddListener(OnStartGame);
@@ -46,16 +49,21 @@ public class MainState : StateBase
 
     public override async UniTask Enter()
     {
-        StartMainAsync().Forget();
+        _playerRebuilder.Zero();
 
+        await _cameraMenu.ReturnCamera();
         await _mainWindow.Show();
+
+        await _playerRebuilder.Rebuild();
+
+        StartMainAsync().Forget();
     }
 
     public override async UniTask Exit()
     {
         await _mainWindow.Hide();
 
-        _menu.StopAnimation();
+        _cameraMenu.StopAnimation();
     }
 
     private void OnStartGame()
@@ -86,7 +94,7 @@ public class MainState : StateBase
 
     private async UniTaskVoid StartMainAsync()
     {
-        _menu.StartAnimation();
+        _cameraMenu.StartAnimation();
     }
 
     private async UniTaskVoid Setting()
