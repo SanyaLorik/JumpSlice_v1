@@ -7701,6 +7701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverState
   _gameOverWindow: {fileID: 289017179}
+  _continueAnimtion: {fileID: 1184316548}
 --- !u!1 &1092603752
 GameObject:
   m_ObjectHideFlags: 0
@@ -8306,7 +8307,8 @@ GameObject:
   - component: {fileID: 1184316547}
   - component: {fileID: 1184316546}
   - component: {fileID: 1184316545}
-  - component: {fileID: 1184316544}
+  - component: {fileID: 1184316549}
+  - component: {fileID: 1184316548}
   m_Layer: 0
   m_Name: Continue Button
   m_TagString: Untagged
@@ -8334,26 +8336,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 456}
   m_SizeDelta: {x: 512, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1184316544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184316542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 626e96b019042a5449e993f7cf077282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.ScaleDownUpAnimation
-  <Entity>k__BackingField:
-    <Source>k__BackingField: {fileID: 1184316543}
-    <Duration>k__BackingField: 1
-    <Ease>k__BackingField: 1
-  <IsAutoStart>k__BackingField: 1
-  _upScale: {x: 1, y: 1, z: 1}
-  _downScale: {x: 0.9, y: 0.9, z: 0.9}
-  _initalScale: {x: 1, y: 1, z: 1}
 --- !u!114 &1184316545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8436,6 +8418,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184316542}
   m_CullTransparentMesh: 1
+--- !u!114 &1184316548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184316542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894d46a3509bcc040b7b74b93dfc503c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Architecture_M.FadeAnimation
+  <Entity>k__BackingField:
+    <Source>k__BackingField: {fileID: 1184316549}
+    <Duration>k__BackingField: 0.64
+    <Ease>k__BackingField: 1
+  <IsAutoStart>k__BackingField: 0
+  _value: 1
+  _initial: 0
+  _delayBeforeAnimation: 1.4
+--- !u!225 &1184316549
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184316542}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1198112656
 GameObject:
   m_ObjectHideFlags: 0
