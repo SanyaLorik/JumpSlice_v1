@@ -3,10 +3,10 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingState : StateBase
+public class ShopState : StateBase
 {
     [Header("Window")]
-    [SerializeField] private WindowBase _settingWindow;
+    [SerializeField] private WindowBase _sjopWindow;
 
     [Header("Managment")]
     [SerializeField] private Button _close;
@@ -26,12 +26,12 @@ public class SettingState : StateBase
 
     public override async UniTask Enter()
     {
-        await _settingWindow.Show();
+        await _sjopWindow.Show();
     }
 
     public override async UniTask Exit()
     {
-        await _settingWindow.Hide();
+        await _sjopWindow.Hide();
         await _menuState.Enter();
     }
 

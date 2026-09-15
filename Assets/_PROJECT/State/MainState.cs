@@ -12,10 +12,14 @@ public class MainState : StateBase
     [Header("Managment")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _settingButton;
+    [SerializeField] private Button _recordButton;
+    [SerializeField] private Button _shopButton;
 
     [Header("States")]
     [SerializeField] private StateBase _ingameState;
     [SerializeField] private StateBase _settingState;
+    [SerializeField] private StateBase _recordState;
+    [SerializeField] private StateBase _shopState;
 
     [Header("Camera")]
     [SerializeField] private CameraMenu _menu;
@@ -28,12 +32,16 @@ public class MainState : StateBase
     {
         _startButton.onClick.AddListener(OnStartGame);
         _settingButton.onClick.AddListener(OnSetting);
+        _recordButton.onClick.AddListener(OnRecord);
+        _shopButton.onClick.AddListener(OnShop);
     }
 
     private void OnDisable()
     {
         _startButton.onClick.RemoveListener(OnStartGame);
         _settingButton.onClick.RemoveListener(OnSetting);
+        _recordButton.onClick.RemoveListener(OnRecord);
+        _shopButton.onClick.RemoveListener(OnShop);
     }
 
     public override async UniTask Enter()
@@ -60,6 +68,16 @@ public class MainState : StateBase
         Setting().Forget();
     }
 
+    private void OnRecord()
+    {
+        Record().Forget();
+    }
+
+    private void OnShop()
+    {
+        Shop().Forget();
+    }
+
     private async UniTaskVoid StartGame()
     {
         await Exit();
@@ -75,5 +93,17 @@ public class MainState : StateBase
     {
         await Exit();
         await _settingState.Enter();
+    }
+
+    private async UniTaskVoid Record()
+    {
+        await Exit();
+        await _recordState.Enter();
+    }
+
+    private async UniTaskVoid Shop()
+    {
+        await Exit();
+        await _shopState.Enter();
     }
 }
