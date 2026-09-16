@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
 using SanyaBeerExtension;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,12 +15,23 @@ public class PlatfromGenerator : MonoBehaviour
     [SerializeField] private PairedValue<float> _range;
     [SerializeField] private int _countAnimationDestroy;
 
+    [Header("Anti-repeat")]
+    [SerializeField, Min(1)] private int _maxRepeatCount = 2;
+
     private const int _initialNumberCount = 1;
 
     private Vector3 _position;
     public int NumberCounter { get; private set; } = _initialNumberCount;
 
     private List<Platform> _platforms = new(16);
+
+    // История последних выбранных префабов
+    private Platform _lastPrefab;
+    private int _lastPrefabRepeat;
+
+    // То же самое для направлений (опционально)
+    private Vector3 _lastDirection;
+    private int _lastDirectionRepeat;
 
     public Platform Generate()
     {
@@ -63,11 +73,13 @@ public class PlatfromGenerator : MonoBehaviour
         _platforms.Clear();
 
         NumberCounter = _initialNumberCount;
+
+        ResetRepeatState();
     }
 
     private Vector3 CalculateNewPositionAndReturnDirection()
     {
-        Vector3 direction = _direction.GetRandomElement();
+        Vector3 direction = GetNonRepeatingDirection();
         if (NumberCounter == 1)
             direction = _initialDirection;
 
@@ -79,18 +91,89 @@ public class PlatfromGenerator : MonoBehaviour
         return direction;
     }
 
-    private void ResetPosition()
-    {
-        _position = _initalPlatform.transform.position;
-    }
-
     private Platform Spawn()
     {
-        Platform prefab = _prefabs.GetRandomElement();
+        Platform prefab = GetNonRepeatingPrefab();
 
         Platform platform = _container.Spawn(prefab, _position);
         platform.name = $"{prefab.name}_{NumberCounter}";
 
         return platform;
+    }
+
+    private Platform GetNonRepeatingPrefab()
+    {
+        if (_prefabs == null || _prefabs.Length == 0)
+            return null;
+
+        // Если префабов мало — не ограничиваем (иначе зациклимся)
+        int allowedRepeat = Mathf.Min(_maxRepeatCount, _prefabs.Length);
+
+        for (int attempt = 0; attempt < 32; attempt++)
+        {
+            Platform candidate = _prefabs.GetRandomElement();
+
+            bool sameAsLast = candidate == _lastPrefab;
+            if (sameAsLast && _lastPrefabRepeat >= allowedRepeat)
+                continue;
+
+            // Обновляем счётчики
+            if (sameAsLast)
+                _lastPrefabRepeat++;
+            else
+            {
+                _lastPrefab = candidate;
+                _lastPrefabRepeat = 1;
+            }
+
+            return candidate;
+        }
+
+        // Фолбэк: если не удалось найти другой префаб — сбрасываем счётчик
+        _lastPrefabRepeat = 0;
+        return _lastPrefab != null ? _lastPrefab : _prefabs[0];
+    }
+
+    private Vector3 GetNonRepeatingDirection()
+    {
+        if (_direction == null || _direction.Length == 0)
+            return Vector3.forward;
+
+        int allowedRepeat = Mathf.Min(_maxRepeatCount, _direction.Length);
+
+        for (int attempt = 0; attempt < 32; attempt++)
+        {
+            Vector3 candidate = _direction.GetRandomElement();
+
+            bool sameAsLast = candidate == _lastDirection;
+            if (sameAsLast && _lastDirectionRepeat >= allowedRepeat)
+                continue;
+
+            if (sameAsLast)
+                _lastDirectionRepeat++;
+            else
+            {
+                _lastDirection = candidate;
+                _lastDirectionRepeat = 1;
+            }
+
+            return candidate;
+        }
+
+        _lastDirectionRepeat = 0;
+        return _lastDirection != Vector3.zero ? _lastDirection : _direction[0];
+    }
+
+    private void ResetRepeatState()
+    {
+        _lastPrefab = null;
+        _lastPrefabRepeat = 0;
+        _lastDirection = Vector3.zero;
+        _lastDirectionRepeat = 0;
+    }
+
+    private void ResetPosition()
+    {
+        _position = _initalPlatform.transform.position;
     }
 }

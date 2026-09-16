@@ -2059,6 +2059,7 @@ MonoBehaviour:
     <From>k__BackingField: 4
     <To>k__BackingField: 4
   _countAnimationDestroy: 6
+  _maxRepeatCount: 2
 --- !u!4 &283048051
 Transform:
   m_ObjectHideFlags: 0
