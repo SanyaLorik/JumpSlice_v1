@@ -32,18 +32,23 @@ public class Platform : MonoBehaviour, IPlatfromBonus
         await BonusService.Instance.Large();
     }
 
-    public async UniTask AppearanceAnimation()
+    public async UniTask AppearanceAnimationAsync()
     {
-        _destroyAnimation.Source.localScale = Vector2.zero;
+        _appearanceAnimation.Source.localScale = Vector2.zero;
 
-        await _destroyAnimation.Source
-            .DOScale(Vector3.one, _destroyAnimation.Duration)
-            .SetEase(_destroyAnimation.Ease)
+        await _appearanceAnimation.Source
+            .DOScale(Vector3.one, _appearanceAnimation.Duration)
+            .SetEase(_appearanceAnimation.Ease)
             .AsyncWaitForCompletion()
             .AsUniTask();
     }
 
-    public async UniTask DestroyAnimation()
+    public void ZeroScale()
+    {
+        _appearanceAnimation.Source.localScale = Vector3.zero;
+    }
+
+    public async UniTask DestroyAnimationAsync()
     {
         await _destroyAnimation.Source
             .DOScale(Vector3.zero, _destroyAnimation.Duration)

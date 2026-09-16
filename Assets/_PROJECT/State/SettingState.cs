@@ -24,19 +24,19 @@ public class SettingState : StateBase
         _close.onClick.RemoveListener(OnClose);
     }
 
-    public override async UniTask Enter()
+    public override async UniTask EnterAsync()
     {
-        await _settingWindow.Show();
+        await _settingWindow.ShowAsync();
     }
 
-    public override async UniTask Exit()
+    public override async UniTask ExitAsync()
     {
-        await _settingWindow.Hide();
-        await _menuState.Enter();
+        await _settingWindow.HideAsync();
+        await _menuState.EnterAsync();
     }
 
     private void OnClose()
     {
-        Exit().Forget();
+        ExitAsync().Forget();
     }
 }

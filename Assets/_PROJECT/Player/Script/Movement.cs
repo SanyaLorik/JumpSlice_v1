@@ -44,15 +44,13 @@ public class Movement : MonoBehaviour
 
         _tokenSource = new CancellationTokenSource();
 
-        _trajectoryAnimation.ShowAnimationAsync().Forget();
+        target = OffsetTarget(target, direction);
 
         MoveTargetAsync(target, direction).Forget();
     }
 
     public void Move()
     {
-        _trajectoryAnimation.HideAnimationAsync().Forget();
-
         _movingTask = _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height)
             .ContinueWith(() => OnMoved?.Invoke());
@@ -63,6 +61,17 @@ public class Movement : MonoBehaviour
         _player.localPosition += _slicedCube.localPosition;
         _slicedCube.localPosition = Vector3.zero;
     }
+    
+    public void ShowTrajectory()
+    {
+        _trajectoryAnimation.ShowAnimationAsync().Forget();
+    }
+
+    public void HideTrajectory()
+    {
+        _trajectoryAnimation.HideAnimationAsync().Forget();
+
+    }
 
     private async UniTaskVoid MoveTargetAsync(Vector3 target, Vector3 direction)
     {
@@ -71,12 +80,12 @@ public class Movement : MonoBehaviour
             Vector3 from = target + direction * _range.From;
             Vector3 to = target + direction * _range.To;
 
-            await MoveLocal(from, to);
-            await MoveLocal(to, from);
+            await MoveLocalAync(from, to);
+            await MoveLocalAync(to, from);
         }
     }
 
-    private async UniTask MoveLocal(Vector3 from, Vector3 to)
+    private async UniTask MoveLocalAync(Vector3 from, Vector3 to)
     {
         float expendedTime = 0;
 
@@ -99,4 +108,14 @@ public class Movement : MonoBehaviour
         }
         while (expendedTime <= _durationRange && _tokenSource.IsCancellationRequested == false);
     }
+
+    private Vector3 OffsetTarget(Vector3 target, Vector3 direction)
+    {
+        if (direction == Vector3.forward)
+            target.x = _player.position.x;
+        else if (direction == Vector3.left)
+            target.z = _player.position.z;
+
+        return target;
+    } 
 }

@@ -24,19 +24,19 @@ public class ShopState : StateBase
         _close.onClick.RemoveListener(OnClose);
     }
 
-    public override async UniTask Enter()
+    public override async UniTask EnterAsync()
     {
-        await _sjopWindow.Show();
+        await _sjopWindow.ShowAsync();
     }
 
-    public override async UniTask Exit()
+    public override async UniTask ExitAsync()
     {
-        await _sjopWindow.Hide();
-        await _menuState.Enter();
+        await _sjopWindow.HideAsync();
+        await _menuState.EnterAsync();
     }
 
     private void OnClose()
     {
-        Exit().Forget();
+        ExitAsync().Forget();
     }
 }

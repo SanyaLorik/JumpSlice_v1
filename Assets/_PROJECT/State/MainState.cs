@@ -24,12 +24,12 @@ public class MainState : StateBase
     [SerializeField] private CameraMenu _cameraMenu;
 
     [Header("Player")]
-    [SerializeField] private PlayerRebuilder _playerRebuilder;
+    [SerializeField] private PlayerBuilder _playerBuilder;
     [SerializeField] private PlatfromGenerator _platfromGenerator;
 
     private void Start()
     {
-        Enter().Forget();
+        EnterAsync().Forget();
     }
 
     private void OnEnable()
@@ -48,50 +48,50 @@ public class MainState : StateBase
         _shopButton.onClick.RemoveListener(OnShop);
     }
 
-    public override async UniTask Enter()
+    public override async UniTask EnterAsync()
     {
-        _playerRebuilder.Zero();
+        _playerBuilder.Zero();
 
-        await _cameraMenu.ReturnCamera();
-        await _platfromGenerator.DestroyAll();
-        await _mainWindow.Show();
+        await _cameraMenu.ReturnCameraAsync();
+        await _platfromGenerator.DestroyAllAsync();
+        await _mainWindow.ShowAsync();
 
-        await _playerRebuilder.Rebuild();
+        await _playerBuilder.RebuildAsync();
 
         StartMainAsync().Forget();
     }
 
-    public override async UniTask Exit()
+    public override async UniTask ExitAsync()
     {
-        await _mainWindow.Hide();
+        await _mainWindow.HideAsync();
 
         _cameraMenu.StopAnimation();
     }
 
     private void OnStartGame()
     {
-        StartGame().Forget();
+        StartGameAsync().Forget();
     }
 
     private void OnSetting()
     {
-        Setting().Forget();
+        SettingAsync().Forget();
     }
 
     private void OnRecord()
     {
-        Record().Forget();
+        RecordAsync().Forget();
     }
 
     private void OnShop()
     {
-        Shop().Forget();
+        ShopAsync().Forget();
     }
 
-    private async UniTaskVoid StartGame()
+    private async UniTaskVoid StartGameAsync()
     {
-        await Exit();
-        await _ingameState.Enter();
+        await ExitAsync();
+        await _ingameState.EnterAsync();
     }
 
     private async UniTaskVoid StartMainAsync()
@@ -99,21 +99,21 @@ public class MainState : StateBase
         _cameraMenu.StartAnimation();
     }
 
-    private async UniTaskVoid Setting()
+    private async UniTaskVoid SettingAsync()
     {
-        await Exit();
-        await _settingState.Enter();
+        await ExitAsync();
+        await _settingState.EnterAsync();
     }
 
-    private async UniTaskVoid Record()
+    private async UniTaskVoid RecordAsync()
     {
-        await Exit();
-        await _recordState.Enter();
+        await ExitAsync();
+        await _recordState.EnterAsync();
     }
 
-    private async UniTaskVoid Shop()
+    private async UniTaskVoid ShopAsync()
     {
-        await Exit();
-        await _shopState.Enter();
+        await ExitAsync();
+        await _shopState.EnterAsync();
     }
 }

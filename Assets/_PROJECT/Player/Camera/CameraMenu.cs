@@ -21,7 +21,7 @@ public class CameraMenu : MonoBehaviour
 
     private Tween _tween;
 
-    public async UniTask ReturnCamera()
+    public async UniTask ReturnCameraAsync()
     {
         UniTask position = _camera.transform
             .DOMove(_initialPoint.position, _returnPositionDuration)

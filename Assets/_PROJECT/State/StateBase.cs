@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class StateBase : MonoBehaviour, IStateAsync
 {
-    public abstract UniTask Enter();
+    public abstract UniTask EnterAsync();
 
-    public abstract UniTask Exit();
+    public abstract UniTask ExitAsync();
 }

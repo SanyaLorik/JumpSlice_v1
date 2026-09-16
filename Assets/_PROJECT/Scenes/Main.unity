@@ -401,7 +401,7 @@ MonoBehaviour:
   _recordState: {fileID: 412591224}
   _shopState: {fileID: 606103620}
   _cameraMenu: {fileID: 1795100381}
-  _playerRebuilder: {fileID: 639272688}
+  _playerBuilder: {fileID: 639272688}
   _platfromGenerator: {fileID: 283048050}
 --- !u!1 &68419282
 GameObject:
@@ -5406,15 +5406,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 639272686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2bf68b995d3004eb4aa00fce998aaa, type: 3}
+  m_Script: {fileID: 11500000, guid: ac44e6dcb33cd0446aa0f0aabb90ff3e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerRebuilder
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBuilder
   _initialPoint: {fileID: 390989444}
   _playerParent: {fileID: 1608469279}
   _slicedChild:
     <Source>k__BackingField: {fileID: 1100742782}
     <Duration>k__BackingField: 0.32
-    <Ease>k__BackingField: 10
+    <Ease>k__BackingField: 4
+  _rigidbody: {fileID: 0}
 --- !u!1 &649145070
 GameObject:
   m_ObjectHideFlags: 0
@@ -7123,6 +7124,7 @@ MonoBehaviour:
   _generator: {fileID: 283048050}
   _movement: {fileID: 1608469285}
   _playerSlicer: {fileID: 1608469286}
+  _playerBuilder: {fileID: 639272688}
   _ingameResours: {fileID: 1272121244}
   _cameraGameplay: {fileID: 1084577388}
   _miniTutorial: {fileID: 178748224}
@@ -11890,8 +11892,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0

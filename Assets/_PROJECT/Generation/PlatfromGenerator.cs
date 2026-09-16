@@ -23,15 +23,14 @@ public class PlatfromGenerator : MonoBehaviour
 
     private List<Platform> _platforms = new(16);
 
-    public async UniTask<Platform> Generate()
+    public Platform Generate()
     {
         Vector3 direction = CalculateNewPositionAndReturnDirection();
 
         Platform platform = Spawn();
         platform.SetNumber(NumberCounter);
         platform.SetDirection(direction);
-
-        await platform.AppearanceAnimation();
+        platform.ZeroScale();
 
         _platforms.Add(platform);
 
@@ -40,7 +39,7 @@ public class PlatfromGenerator : MonoBehaviour
         return platform;
     }
 
-    public async UniTask DestroyAll()
+    public async UniTask DestroyAllAsync()
     {
         ResetPosition();
 
@@ -53,7 +52,7 @@ public class PlatfromGenerator : MonoBehaviour
         for (int i = 0; i < _platforms.Count; i++)
         {
             if (i < _countAnimationDestroy)
-                await _platforms[i].DestroyAnimation();
+                await _platforms[i].DestroyAnimationAsync();
             else
                 _platforms[i].DestoryNoAnimation();
         }

@@ -15,6 +15,7 @@ public class IngameState : StateBase
     [SerializeField] private PlatfromGenerator _generator;
     [SerializeField] private Movement _movement;
     [SerializeField] private PlayerSlicer _playerSlicer;
+    [SerializeField] private PlayerBuilder _playerBuilder;
 
     [Header("Award")]
     [SerializeField] private IngameResourse _ingameResours;
@@ -42,7 +43,7 @@ public class IngameState : StateBase
         _movement.OnMoved -= OnNext;
     }
 
-    public override async UniTask Enter()
+    public override async UniTask EnterAsync()
     {
         _inputActivity.Disable();
 
@@ -50,19 +51,19 @@ public class IngameState : StateBase
 
         _miniTutorial.StartTutorial();
 
-        await _ingameWindow.Show();
+        await _ingameWindow.ShowAsync();
 
         NextAsync().Forget();
 
         _inputActivity.Enable();
     }
 
-    public override async UniTask Exit()
+    public override async UniTask ExitAsync()
     {
         _inputActivity.Disable();
 
-        await _ingameWindow.Hide();
-        await _gameOverState.Enter();
+        await _ingameWindow.HideAsync();
+        await _gameOverState.EnterAsync();
     }
 
     private void OnMove()
@@ -79,7 +80,8 @@ public class IngameState : StateBase
     {
         if (_movement.IsMoving == true)
             return;
-        
+
+        _movement.HideTrajectory();
         _movement.Move();
         _miniTutorial.StopTutorial();
     }
@@ -95,7 +97,10 @@ public class IngameState : StateBase
 
             if (isExpired == true)
             {
-                await Exit();
+                _playerBuilder.Lose();
+
+                await ExitAsync();
+
                 return;
             }
 
@@ -106,10 +111,13 @@ public class IngameState : StateBase
                 await _platform.ApplyAsync();
         }
 
-        Platform platform = await _generator.Generate();
+        Platform platform = _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
 
-        await _cameraGameplay.LookAt(platform.Direction);
+        await _cameraGameplay.LookAtAsync(platform.Direction);
+        await platform.AppearanceAnimationAsync();
+
+        _movement.ShowTrajectory();
 
         _inputActivity.Enable();
 

@@ -24,19 +24,19 @@ public class RecordState : StateBase
         _close.onClick.RemoveListener(OnClose);
     }
 
-    public override async UniTask Enter()
+    public override async UniTask EnterAsync()
     {
-        await _recoedWindow.Show();
+        await _recoedWindow.ShowAsync();
     }
 
-    public override async UniTask Exit()
+    public override async UniTask ExitAsync()
     {
-        await _recoedWindow.Hide();
-        await _menuState.Enter();
+        await _recoedWindow.HideAsync();
+        await _menuState.EnterAsync();
     }
 
     private void OnClose()
     {
-        Exit().Forget();
+        ExitAsync().Forget();
     }
 }

@@ -3,16 +3,19 @@ using DG.Tweening;
 using SanyaBeerExtension;
 using UnityEngine;
 
-public class PlayerRebuilder : MonoBehaviour
+public class PlayerBuilder : MonoBehaviour
 {
+    [Header("Respawn")]
     [SerializeField] private Transform _initialPoint;
     [SerializeField] private Transform _playerParent;   
-    [SerializeField] private ParametrBase<Transform> _slicedChild;   
+    [SerializeField] private ParametrBase<Transform> _slicedChild;
 
-    public async UniTask Rebuild()
+    private Rigidbody _rigidbody;
+
+    public async UniTask RebuildAsync()
     {
         _playerParent.SetPositionAndRotation(_initialPoint.position, _initialPoint.rotation);
-        _slicedChild.Source.SetPositionAndRotation(Vector2.zero, Quaternion.identity);
+        _slicedChild.Source.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         await _slicedChild.Source
             .DOScale(1, _slicedChild.Duration)
@@ -22,6 +25,14 @@ public class PlayerRebuilder : MonoBehaviour
 
     public void Zero()
     {
+        if (_rigidbody != null)
+            Destroy(_rigidbody);
+
         _slicedChild.Source.localScale = Vector3.zero;
+    }
+
+    public void Lose()
+    {
+        _rigidbody = _playerParent.gameObject.AddComponent<Rigidbody>();
     }
 }

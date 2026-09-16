@@ -34,23 +34,23 @@ public class GameOverState : StateBase
         _continueButton.onClick.RemoveListener(OnContinue);
     }
 
-    public override async UniTask Enter()
+    public override async UniTask EnterAsync()
     {
         _continueAnimtion.ResetToInitialState();
 
         _uiGameOver.SetMoney(_moneyWallet.Count);
         _uiGameOver.SetRecord(_recordWallet.Count);
 
-        await _gameOverWindow.Show();
+        await _gameOverWindow.ShowAsync();
 
         _continueAnimtion.Animate();
     }
 
-    public override async UniTask Exit()
+    public override async UniTask ExitAsync()
     {
         _continueAnimtion.ResetToInitialState();
 
-        await _gameOverWindow.Hide();
+        await _gameOverWindow.HideAsync();
     }
 
     private void OnContinue()
@@ -60,7 +60,7 @@ public class GameOverState : StateBase
 
     private async UniTaskVoid ToMenu()
     {
-        await Exit();
-        await _menuState.Enter();
+        await ExitAsync();
+        await _menuState.EnterAsync();
     }
 }
