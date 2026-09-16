@@ -29,7 +29,7 @@ public class IngameState : StateBase
     [Inject] private IInputPlayer _playerInput;
     [Inject] private IInputActivity _inputActivity;
 
-    private Platform _platform;
+    private Platform _platform = null;
 
     private void OnEnable()
     {
@@ -114,7 +114,10 @@ public class IngameState : StateBase
         Platform platform = _generator.Generate();
         _movement.SetTarget(platform.Target.position, platform.Direction);
 
-        await _cameraGameplay.LookAtAsync(platform.Direction);
+        if (_platform == null)
+            _platform = _generator.InitalPlatform;
+
+        await _cameraGameplay.LookAtAsync(_platform.Target.position, platform.Direction);
         await platform.AppearanceAnimationAsync();
 
         _movement.ShowTrajectory();

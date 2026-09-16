@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using SanyaBeerExtension;
 using System;
 using System.Linq;
 using System.Threading;
@@ -13,13 +14,19 @@ public class CameraGameplay : MonoBehaviour
 
     private CancellationTokenSource _tokenSource;
 
-    public async UniTask LookAtAsync(Vector3 direction)
+    public async UniTask LookAtAsync(Vector3 target, Vector3 direction)
     {
-        Transform position = _positions.FirstOrDefault(i => i.Direction == direction).Position;
-        await MoveToTargetAsync(position);
+        Transform final = _positions.FirstOrDefault(i => i.Direction == direction).Position;
+
+        Vector3 position = final.position;
+        Quaternion rotation = final.rotation;
+
+        position += target.ResetY();
+
+        await MoveToTargetAsync(position, rotation);
     }
 
-    public async UniTask MoveToTargetAsync(Transform target)
+    public async UniTask MoveToTargetAsync(Vector3 position, Quaternion rotation)
     {
         // Отменяем предыдущую операцию
         _tokenSource?.Cancel();
@@ -30,8 +37,8 @@ public class CameraGameplay : MonoBehaviour
         {
             // Запускаем передвижение и поворот параллельно
             await UniTask.WhenAll(
-                MovePositionAsync(target.position, _tokenSource.Token),
-                RotateAsync(target.rotation, _tokenSource.Token)
+                MovePositionAsync(position, _tokenSource.Token),
+                RotateAsync(rotation, _tokenSource.Token)
             );
         }
         catch (OperationCanceledException)

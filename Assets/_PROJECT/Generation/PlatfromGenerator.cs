@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlatfromGenerator : MonoBehaviour
 {
-    [SerializeField] private Platform _initalPlatform;
+    [field: SerializeField] public Platform InitalPlatform { get; private set; }
 
     [Header("Parameters")]
     [SerializeField] private PositionSpawner<Platform> _container;
@@ -174,6 +174,6 @@ public class PlatfromGenerator : MonoBehaviour
 
     private void ResetPosition()
     {
-        _position = _initalPlatform.transform.position;
+        _position = InitalPlatform.transform.position;
     }
 }
