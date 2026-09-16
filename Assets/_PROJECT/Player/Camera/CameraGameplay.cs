@@ -16,10 +16,10 @@ public class CameraGameplay : MonoBehaviour
     public async UniTask LookAtAsync(Vector3 direction)
     {
         Transform position = _positions.FirstOrDefault(i => i.Direction == direction).Position;
-        await MoveToTarget(position);
+        await MoveToTargetAsync(position);
     }
 
-    public async UniTask MoveToTarget(Transform target)
+    public async UniTask MoveToTargetAsync(Transform target)
     {
         // Отменяем предыдущую операцию
         _tokenSource?.Cancel();

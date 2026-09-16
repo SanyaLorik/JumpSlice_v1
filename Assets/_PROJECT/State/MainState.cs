@@ -27,6 +27,8 @@ public class MainState : StateBase
     [SerializeField] private PlayerBuilder _playerBuilder;
     [SerializeField] private PlatfromGenerator _platfromGenerator;
 
+    private bool _isFirst = true;
+
     private void Start()
     {
         EnterAsync().Forget();
@@ -50,13 +52,18 @@ public class MainState : StateBase
 
     public override async UniTask EnterAsync()
     {
-        _playerBuilder.Zero();
+        if (_isFirst == false)
+        {
+            _playerBuilder.Zero();
 
-        await _cameraMenu.ReturnCameraAsync();
-        await _platfromGenerator.DestroyAllAsync();
-        await _mainWindow.ShowAsync();
+            await _cameraMenu.ReturnCameraAsync();
+            await _platfromGenerator.DestroyAllAsync();
+            await _mainWindow.ShowAsync();
 
-        await _playerBuilder.RebuildAsync();
+            await _playerBuilder.RebuildAsync();
+        }
+
+        _isFirst = false;
 
         StartMainAsync().Forget();
     }
