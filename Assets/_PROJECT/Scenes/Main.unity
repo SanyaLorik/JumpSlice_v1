@@ -5414,8 +5414,7 @@ MonoBehaviour:
   _slicedChild:
     <Source>k__BackingField: {fileID: 1100742782}
     <Duration>k__BackingField: 0.32
-    <Ease>k__BackingField: 4
-  _rigidbody: {fileID: 0}
+    <Ease>k__BackingField: 31
 --- !u!1 &649145070
 GameObject:
   m_ObjectHideFlags: 0

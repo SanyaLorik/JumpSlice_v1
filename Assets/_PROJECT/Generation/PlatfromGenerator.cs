@@ -49,9 +49,12 @@ public class PlatfromGenerator : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < _platforms.Count; i++)
+        int count = _platforms.Count;
+        int animatedCount = Mathf.Min(_countAnimationDestroy, count);
+
+        for (int i = count - 1; i >= 0; i--)
         {
-            if (i < _countAnimationDestroy)
+            if (i >= count - animatedCount)
                 await _platforms[i].DestroyAnimationAsync();
             else
                 _platforms[i].DestoryNoAnimation();
