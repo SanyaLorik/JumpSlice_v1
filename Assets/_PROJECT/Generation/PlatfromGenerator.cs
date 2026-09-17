@@ -19,7 +19,8 @@ public class PlatfromGenerator : MonoBehaviour
     [SerializeField, Min(1)] private int _maxRepeatCount = 2;
 
     [Header("Gradient")]
-    [SerializeField] private PlatformGradient _gradient;
+    [SerializeField] private PlatformGradient _platformGradient;
+    [SerializeField] private SkyboxGradient _skyboxGradient;
 
     private const int _initialNumberCount = 1;
 
@@ -45,9 +46,10 @@ public class PlatfromGenerator : MonoBehaviour
         platform.SetNumber(NumberCounter);
         platform.SetDirection(direction);
         platform.ZeroScale();
-        platform.SetColor(_gradient.GetColor(NumberCounter - 1));
+        platform.SetColor(_platformGradient.GetColor(NumberCounter - 1));
 
         _platforms.Add(platform);
+        _skyboxGradient.UpdateColor(NumberCounter - 1);
 
         NumberCounter++;
 
@@ -57,6 +59,7 @@ public class PlatfromGenerator : MonoBehaviour
     public async UniTask DestroyAllAsync()
     {
         ResetPosition();
+        _skyboxGradient.ResetToInitialColor();
 
         if (_platforms.Count == 0)
         {
