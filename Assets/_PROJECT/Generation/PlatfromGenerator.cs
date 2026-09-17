@@ -18,9 +18,13 @@ public class PlatfromGenerator : MonoBehaviour
     [Header("Anti-repeat")]
     [SerializeField, Min(1)] private int _maxRepeatCount = 2;
 
+    [Header("Gradient")]
+    [SerializeField] private PlatformGradient _gradient;
+
     private const int _initialNumberCount = 1;
 
     private Vector3 _position;
+
     public int NumberCounter { get; private set; } = _initialNumberCount;
 
     private List<Platform> _platforms = new(16);
@@ -41,6 +45,7 @@ public class PlatfromGenerator : MonoBehaviour
         platform.SetNumber(NumberCounter);
         platform.SetDirection(direction);
         platform.ZeroScale();
+        platform.SetColor(_gradient.GetColor(NumberCounter - 1));
 
         _platforms.Add(platform);
 
@@ -64,7 +69,7 @@ public class PlatfromGenerator : MonoBehaviour
 
         for (int i = count - 1; i >= 0; i--)
         {
-            if (i >= count - animatedCount)
+            if (animatedCount >= i)
                 await _platforms[i].DestroyAnimationAsync();
             else
                 _platforms[i].DestoryNoAnimation();

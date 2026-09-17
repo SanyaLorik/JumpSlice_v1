@@ -14,8 +14,11 @@ public class Platform : MonoBehaviour, IPlatfromBonus
 
     [SerializeField] private ParametrBase<Transform> _appearanceAnimation;
     [SerializeField] private ParametrBase<Transform> _destroyAnimation;
+    [SerializeField] private MeshRenderer[] _skins;
 
     public Vector3 Direction { get; private set; }
+
+    private MaterialPropertyBlock _block;
 
     public void SetNumber(int number)
     {
@@ -30,6 +33,19 @@ public class Platform : MonoBehaviour, IPlatfromBonus
     public async UniTask ApplyAsync()
     {
         await BonusService.Instance.Large();
+    }
+
+    public void SetColor(Color color)
+    {
+        _block ??= new MaterialPropertyBlock();
+
+        foreach (MeshRenderer skin in _skins)
+        {
+            skin.GetPropertyBlock(_block);
+            _block.SetColor("_BaseColor", color);
+            _block.SetColor("_Color", color);
+            skin.SetPropertyBlock(_block);
+        }
     }
 
     public async UniTask AppearanceAnimationAsync()
