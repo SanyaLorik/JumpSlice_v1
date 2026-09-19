@@ -6,15 +6,21 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour, IPlatfromBonus
 {
+    [Header("Gameplay")]
     [field: SerializeField] public Transform Target { get; private set; }
     [field: SerializeField] public Transform SlicePattern { get; private set; }
     [SerializeField] private TextMeshPro _numberText;
 
-    [field: SerializeField] public bool HasBonus { get; private set; }
-
+    [Header("Animation")]
     [SerializeField] private ParametrBase<Transform> _appearanceAnimation;
     [SerializeField] private ParametrBase<Transform> _destroyAnimation;
     [SerializeField] private MeshRenderer[] _skins;
+
+    [field: Header("Bonus")]
+    [field: SerializeField] public bool HasBonus { get; private set; }
+    [SerializeField] private GameObject _bonusActivity;
+    [SerializeField] private ParametrBase<Transform> _bonusAppearanceAnimation;
+    [SerializeField] private ParametrBase<Transform> _bonusDestroyAnimation;
 
     public Vector3 Direction { get; private set; }
 
@@ -30,8 +36,15 @@ public class Platform : MonoBehaviour, IPlatfromBonus
         Direction = direction;
     }
 
-    public async UniTask ApplyAsync()
+    public async UniTask ApplyBonusAsync()
     {
+        await _bonusDestroyAnimation.Source
+            .DOScale(Vector3.zero, _bonusDestroyAnimation.Duration)
+            .SetEase(_bonusDestroyAnimation.Ease)
+            .OnComplete(() => _bonusActivity.DisactiveSelf())
+            .AsyncWaitForCompletion()
+            .AsUniTask();
+
         await BonusService.Instance.Large();
     }
 
@@ -78,5 +91,22 @@ public class Platform : MonoBehaviour, IPlatfromBonus
     public void DestoryNoAnimation()
     {
         Destroy(gameObject);
+    }
+
+    public void ActiveBonus()
+    {
+        HasBonus = true;
+    }
+
+    public async UniTask ShowBonusAsync()
+    {
+        _bonusAppearanceAnimation.Source.localScale = Vector3.zero;
+        _bonusActivity.ActiveSelf();
+
+        await _bonusAppearanceAnimation.Source
+            .DOScale(Vector3.one, _bonusAppearanceAnimation.Duration)
+            .SetEase(_bonusAppearanceAnimation.Ease)
+            .AsyncWaitForCompletion()
+            .AsUniTask();
     }
 }

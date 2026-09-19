@@ -22,6 +22,9 @@ public class PlatfromGenerator : MonoBehaviour
     [SerializeField] private PlatformGradient _platformGradient;
     [SerializeField] private SkyboxGradient _skyboxGradient;
 
+    [Header("Bonus")]
+    [SerializeField] private BonusActivator _bonusActivator;
+
     private const int _initialNumberCount = 1;
 
     private Vector3 _position;
@@ -50,6 +53,9 @@ public class PlatfromGenerator : MonoBehaviour
 
         _platforms.Add(platform);
         _skyboxGradient.UpdateColor(NumberCounter - 1);
+
+        if (_bonusActivator.IsActive(NumberCounter) == true)
+            platform.ActiveBonus();
 
         NumberCounter++;
 

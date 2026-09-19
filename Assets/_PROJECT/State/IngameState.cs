@@ -108,7 +108,7 @@ public class IngameState : StateBase
             _ingameResours.AddPlatform();
 
             if (_platform.HasBonus == true)
-                await _platform.ApplyAsync();
+                await _platform.ApplyBonusAsync();
         }
 
         Platform platform = _generator.Generate();
@@ -119,6 +119,9 @@ public class IngameState : StateBase
 
         await _cameraGameplay.LookAtAsync(_platform.Target.position, platform.Direction);
         await platform.AppearanceAnimationAsync();
+
+        if (platform.HasBonus == true)
+            await platform.ShowBonusAsync();
 
         _movement.ShowTrajectory();
 

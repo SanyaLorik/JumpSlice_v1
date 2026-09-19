@@ -4,5 +4,5 @@ public interface IPlatfromBonus
 {
     bool HasBonus { get; }
 
-    UniTask ApplyAsync();
+    UniTask ApplyBonusAsync();
 }
