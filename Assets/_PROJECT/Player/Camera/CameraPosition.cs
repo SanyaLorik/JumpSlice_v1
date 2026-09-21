@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-public class CameraMenu : MonoBehaviour
+public class CameraPosition : MonoBehaviour
 {
     [SerializeField] private Transform _initialPoint;
     [SerializeField] private Camera _camera;

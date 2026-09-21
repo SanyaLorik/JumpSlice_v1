@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class ShopState : StateBase
 {
     [Header("Window")]
-    [SerializeField] private WindowBase _sjopWindow;
+    [SerializeField] private WindowBase _shopWindow;
 
     [Header("Managment")]
     [SerializeField] private Button _close;
 
     [Header("States")]
     [SerializeField] private StateBase _menuState;
+
+    [Header("Camera")]
+    [SerializeField] private CameraPosition _cameraShop;
 
     private void OnEnable()
     {
@@ -26,12 +29,19 @@ public class ShopState : StateBase
 
     public override async UniTask EnterAsync()
     {
-        await _sjopWindow.ShowAsync();
+        await _cameraShop.ReturnCameraAsync();
+
+        _cameraShop.StartAnimation();
+
+        await _shopWindow.ShowAsync();
     }
 
     public override async UniTask ExitAsync()
     {
-        await _sjopWindow.HideAsync();
+        await _shopWindow.HideAsync();
+
+        _cameraShop.StopAnimation();
+
         await _menuState.EnterAsync();
     }
 

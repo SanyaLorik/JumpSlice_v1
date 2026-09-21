@@ -21,13 +21,13 @@ public class MainState : StateBase
     [SerializeField] private StateBase _shopState;
 
     [Header("Camera")]
-    [SerializeField] private CameraMenu _cameraMenu;
+    [SerializeField] private CameraPosition _cameraMenu;
 
     [Header("Player")]
     [SerializeField] private PlayerBuilder _playerBuilder;
     [SerializeField] private PlatfromGenerator _platfromGenerator;
 
-    private bool _isFirst = true;
+    private MenuEnter _menuEnter = MenuEnter.First;
 
     private void Start()
     {
@@ -52,7 +52,12 @@ public class MainState : StateBase
 
     public override async UniTask EnterAsync()
     {
-        if (_isFirst == false)
+        if (_menuEnter == MenuEnter.First)
+        {
+            await _mainWindow.ShowAsync();
+        }
+
+        if (_menuEnter == MenuEnter.Ingame)
         {
             _playerBuilder.Zero();
 
@@ -63,9 +68,18 @@ public class MainState : StateBase
             await _playerBuilder.RebuildAsync();
         }
 
-        _isFirst = false;
+        if (_menuEnter == MenuEnter.Shop)
+        {
+            await _cameraMenu.ReturnCameraAsync();
+            await _mainWindow.ShowAsync();
+        }
 
-        StartMainAsync().Forget();
+        if (_menuEnter == MenuEnter.Other)
+        {
+            await _mainWindow.ShowAsync();
+        }
+
+        _cameraMenu.StartAnimation();
     }
 
     public override async UniTask ExitAsync()
@@ -77,21 +91,26 @@ public class MainState : StateBase
 
     private void OnStartGame()
     {
+        _menuEnter = MenuEnter.Ingame;
+
         StartGameAsync().Forget();
     }
 
     private void OnSetting()
     {
+        _menuEnter = MenuEnter.Other;
         SettingAsync().Forget();
     }
 
     private void OnRecord()
     {
+        _menuEnter = MenuEnter.Other;
         RecordAsync().Forget();
     }
 
     private void OnShop()
     {
+        _menuEnter = MenuEnter.Shop;
         ShopAsync().Forget();
     }
 
@@ -99,11 +118,6 @@ public class MainState : StateBase
     {
         await ExitAsync();
         await _ingameState.EnterAsync();
-    }
-
-    private async UniTaskVoid StartMainAsync()
-    {
-        _cameraMenu.StartAnimation();
     }
 
     private async UniTaskVoid SettingAsync()
@@ -122,5 +136,13 @@ public class MainState : StateBase
     {
         await ExitAsync();
         await _shopState.EnterAsync();
+    }
+
+    private enum MenuEnter
+    {
+        First = 0,
+        Ingame = 1,
+        Shop = 2,
+        Other
     }
 }
