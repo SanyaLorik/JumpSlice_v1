@@ -9,7 +9,7 @@ public class IngameState : StateBase
     [SerializeField] private WindowBase _ingameWindow;
 
     [Header("States")]
-    [SerializeField] private StateBase _gameOverState;
+    [SerializeField] private StateBase _chanceState;
 
     [Header("Gameplay")]
     [SerializeField] private PlatfromGenerator _generator;
@@ -63,7 +63,7 @@ public class IngameState : StateBase
         _inputActivity.Disable();
 
         await _ingameWindow.HideAsync();
-        await _gameOverState.EnterAsync();
+        await _chanceState.EnterAsync();
     }
 
     private void OnMove()
