@@ -66,7 +66,7 @@ public class ChanceState : StateBase
     private async UniTaskVoid ToIngame()
     {
         await ExitAsync();
-        await _ingameState.EnterAsync();
+        await (_ingameState as IngameState).EnterReturnAsync();
     }
 
     private async UniTaskVoid ToGameOver()

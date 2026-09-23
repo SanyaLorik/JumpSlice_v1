@@ -21,7 +21,18 @@ public class PlayerBuilder : MonoBehaviour
             .DOScale(1, _slicedChild.Duration)
             .SetEase(_slicedChild.Ease)
             .AsyncWaitForCompletion();
-    } 
+    }
+
+    public async UniTask RebuildInTargetAsync(Vector3 target)
+    {
+        _playerParent.SetPositionAndRotation(target, Quaternion.identity);
+        _slicedChild.Source.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+        await _slicedChild.Source
+            .DOScale(1, _slicedChild.Duration)
+            .SetEase(_slicedChild.Ease)
+            .AsyncWaitForCompletion();
+    }
 
     public void Zero()
     {

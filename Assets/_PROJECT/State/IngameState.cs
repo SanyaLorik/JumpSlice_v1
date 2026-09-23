@@ -1,5 +1,7 @@
 using Architecture_M;
 using Cysharp.Threading.Tasks;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -64,6 +66,20 @@ public class IngameState : StateBase
 
         await _ingameWindow.HideAsync();
         await _chanceState.EnterAsync();
+    }
+
+    public async UniTask EnterReturnAsync()
+    {
+        _inputActivity.Disable();
+
+        _playerBuilder.Zero();
+
+        await _ingameWindow.ShowAsync();
+        await _playerBuilder.RebuildInTargetAsync(_platform.Target.position);
+
+        NextAsync().Forget();
+
+        _inputActivity.Enable();
     }
 
     private void OnMove()
