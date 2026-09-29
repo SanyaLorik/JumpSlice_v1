@@ -24,37 +24,59 @@ public class ShopManager : MonoBehaviour
 
     private void UpdateBoughtSkin()
     {
-        foreach (ShopItemSave skin in _shopSave.Skins)
+        foreach (ShopItemButton button in _buttons)
         {
-            ShopItemButton button = _buttons.FirstOrDefault(i => i.Id == skin.Id);
-            if (button == default)
+            ShopItemSave skinSave = _shopSave.Skins.FirstOrDefault(i => i.Id == button.Id);
+            if (skinSave == default || skinSave == null)
+            {
+                AddSkinToSave(button);
                 continue;
+            }
 
-            if (skin.IsBought == true)
+            if (skinSave.IsBought == true)
             {
                 button.ActiveSelectButton();
 
-                if (skin.Id == _shopSave.IdSelect)
+                if (button.Id == _shopSave.IdSelect)
                     button.UninteracSelectButton();
                 else
                     button.InteractSelectButton();
             }
             else
             {
-                if (button.IsAd == true)
-                {
-                    button.ActiveAdButton();
-                }
-                else
-                {
-                    button.ActiveBuyButton();
-
-                    if (button.Price <= _globalWallet.Count)
-                        button.InteractBuyButton();
-                    else
-                        button.UninteracSelectButton();
-                }
+                ControlNonBought(button);
             }
+        }
+    }
+
+    private void AddSkinToSave(ShopItemButton button)
+    {
+        ShopItemSave shopItem = new()
+        {
+            Id = button.Id,
+            IsAd = button.IsAd,
+            MaxCountAd = button.MaxCountAd
+        };
+
+        _shopSave.Skins.Add(shopItem);
+
+        ControlNonBought(button);
+    }
+
+    private void ControlNonBought(ShopItemButton button)
+    {
+        if (button.IsAd == true)
+        {
+            button.ActiveAdButton();
+        }
+        else
+        {
+            button.ActiveBuyButton();
+
+            if (button.Price <= _globalWallet.Count)
+                button.InteractBuyButton();
+            else
+                button.UninteractBuyButton();
         }
     }
 }

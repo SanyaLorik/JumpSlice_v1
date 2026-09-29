@@ -7,9 +7,17 @@ public class ShopSave
 {
     public int IdSelect = 0;
 
-    public List<ShopItemSave> Skins;
+    public List<ShopItemSave> Skins = new()
+    {
+        new ShopItemSave()
+        {
+            Id = 0,
+            IsBought = true
+        }
+    };
 }
 
+[Serializable]
 public class ShopItemSave 
 {
     public int Id;

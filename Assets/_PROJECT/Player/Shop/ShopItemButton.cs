@@ -1,4 +1,5 @@
 ﻿using SanyaBeerExtension;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,8 +7,11 @@ using UnityEngine.UI;
 public class ShopItemButton : MonoBehaviour
 {
     [field: SerializeField] public int Id { get; private set; }
-    [field: SerializeField] public bool IsAd { get; private set; }
     [field: SerializeField] public int Price { get; private set; }
+
+    [field: Header("Ad")]
+    [field: SerializeField] public bool IsAd { get; private set; }
+    [field: SerializeField] public int MaxCountAd { get; private set; }
 
     [Header("Buy")]
     [SerializeField] private Button _buyButton;
@@ -25,6 +29,21 @@ public class ShopItemButton : MonoBehaviour
     private void Awake()
     {
         _moneyText.text = Price.ToString();
+    }
+
+    public void AddBuyClickCallback(Action action)
+    {
+        _buyButton.onClick.AddListener(action.Invoke);
+    }
+
+    public void AddSelectClickCallback(Action action)
+    {
+        _selectedButton.onClick.AddListener(action.Invoke);
+    }
+
+    public void AddAdClickCallback(Action action)
+    {
+        _adButton.onClick.AddListener(action.Invoke);
     }
 
     public void ActiveBuyButton()
@@ -70,6 +89,6 @@ public class ShopItemButton : MonoBehaviour
 
     public void SetAdText(int adCount)
     {
-        _adText.text = adCount.ToString();
+        _adText.text = $"{adCount.ToString()} / {MaxCountAd}";
     }
 }
