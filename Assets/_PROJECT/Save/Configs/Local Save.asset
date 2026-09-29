@@ -13,15 +13,51 @@ MonoBehaviour:
   m_Name: Local Save
   m_EditorClassIdentifier: Assembly-CSharp::GameSaveSO
   Save:
-    LevelId: 0
+    Money: 0
+    Record: 0
     Shop:
-      IdSelect: 0
+      IdSelect: 1
       Skins:
       - Id: 0
         IsBought: 1
         IsAd: 0
-        MaxCountAd: 0
         CurrentCountAd: 0
+        MaxCountAd: -1
+      - Id: 1
+        IsBought: 1
+        IsAd: 1
+        CurrentCountAd: 2
+        MaxCountAd: 2
+      - Id: 2
+        IsBought: 0
+        IsAd: 0
+        CurrentCountAd: 0
+        MaxCountAd: 0
+      - Id: 3
+        IsBought: 0
+        IsAd: 0
+        CurrentCountAd: 0
+        MaxCountAd: 0
+      - Id: 4
+        IsBought: 0
+        IsAd: 1
+        CurrentCountAd: 0
+        MaxCountAd: 3
+      - Id: 5
+        IsBought: 0
+        IsAd: 0
+        CurrentCountAd: 0
+        MaxCountAd: 0
+      - Id: 6
+        IsBought: 1
+        IsAd: 1
+        CurrentCountAd: 4
+        MaxCountAd: 4
+      - Id: 7
+        IsBought: 0
+        IsAd: 0
+        CurrentCountAd: 0
+        MaxCountAd: 0
     DailyRewardSave:
       LastDateTimeReceived: 
       LastDayNumber: -1

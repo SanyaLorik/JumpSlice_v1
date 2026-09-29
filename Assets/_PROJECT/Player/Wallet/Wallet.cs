@@ -7,6 +7,12 @@ public class Wallet : MonoBehaviour
 
     public Action<int> OnChanged;
 
+    public void Set(int count)
+    {
+        Clear();
+        Change(count);
+    }
+
     public void Add(int count)
     {
         Change(count);

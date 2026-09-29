@@ -18,11 +18,14 @@ public class GameOverState : StateBase
     [SerializeField] private StateBase _menuState;
 
     [Header("Wallets")]
-    [SerializeField] private Wallet _moneyWallet;
-    [SerializeField] private Wallet _recordWallet;
+    [SerializeField] private Wallet _ingameMoneyWallet;
+    [SerializeField] private Wallet _ingameRecordWallet;
 
     [Header("Animation")]
     [SerializeField] private DOTweenAnimationGenericBase<CanvasGroup> _continueAnimtion;
+
+    [Header("Resourse")]
+    [SerializeField] private MenuResource _menuResource;
 
     private void OnEnable()
     {
@@ -38,8 +41,8 @@ public class GameOverState : StateBase
     {
         _continueAnimtion.ResetToInitialState();
 
-        _uiGameOver.SetMoney(_moneyWallet.Count);
-        _uiGameOver.SetRecord(_recordWallet.Count);
+        _uiGameOver.SetMoney(_ingameMoneyWallet.Count);
+        _uiGameOver.SetRecord(_ingameRecordWallet.Count);
 
         await _gameOverWindow.ShowAsync();
 
@@ -49,6 +52,7 @@ public class GameOverState : StateBase
     public override async UniTask ExitAsync()
     {
         _continueAnimtion.ResetToInitialState();
+        _menuResource.UpdateResourse();
 
         await _gameOverWindow.HideAsync();
     }
