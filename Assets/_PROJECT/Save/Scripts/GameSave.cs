@@ -9,7 +9,8 @@ public class GameSave : GameSaveBase,
     IDailyRewardSaveLoader, IWheelFortuneSaveLoader, IDailyQuestSaveLoader, ISkinSaveLoader, ICommunitySaveLoader
 {
     [Header("Economy")]
-    public int LevelId;
+    public int Money;
+    public int Record;
 
     [Header("Shop")]
     public ShopSave Shop;
