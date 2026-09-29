@@ -11,6 +11,9 @@ public class GameSave : GameSaveBase,
     [Header("Economy")]
     public int LevelId;
 
+    [Header("Shop")]
+    public ShopSave Shop;
+
     public DailyRewardSave DailyRewardSave;
     public WheelFortuneSave WheelFortuneSave;
     public DailyQuestSave DailyQuestSave;

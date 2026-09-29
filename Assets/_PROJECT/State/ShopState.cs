@@ -17,6 +17,9 @@ public class ShopState : StateBase
     [Header("Camera")]
     [SerializeField] private CameraPosition _cameraShop;
 
+    [Header("Shop")]
+    [SerializeField] private ShopManager _shop;
+
     private void OnEnable()
     {
         _close.onClick.AddListener(OnClose);
@@ -32,6 +35,8 @@ public class ShopState : StateBase
         await _cameraShop.ReturnCameraAsync();
 
         _cameraShop.StartAnimation();
+
+        _shop.UpdateView();
 
         await _shopWindow.ShowAsync();
     }
