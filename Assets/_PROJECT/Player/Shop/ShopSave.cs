@@ -24,7 +24,7 @@ public class ShopItemSave
     public bool IsBought;
 
     [Header("Ad")]
-    public bool IsAd;
-    public int MaxCountAd;
-    public int CurrentCountAd;
+    public bool IsAd = false;
+    public int CurrentCountAd = 0;
+    public int MaxCountAd = -1;
 }
