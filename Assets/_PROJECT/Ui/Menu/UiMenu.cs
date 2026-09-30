@@ -1,10 +1,11 @@
-﻿using TMPro;
+﻿using SanyaBeerExtension;
+using TMPro;
 using UnityEngine;
 
 public class UiMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _recordText;
-    [SerializeField] private TextMeshProUGUI _moneyText;
+    [SerializeField] private TextMeshProUGUI[] _moneyTexts;
 
     public void SetRecord(int record)
     {
@@ -13,6 +14,6 @@ public class UiMenu : MonoBehaviour
 
     public void SetMoney(int money)
     {
-        _moneyText.text = money.ToString();
+        _moneyTexts.ForEach(i => i.text = money.ToString());
     }
 }

@@ -14715,7 +14715,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiMenu
   _recordText: {fileID: 1282045163}
-  _moneyText: {fileID: 1835478728}
+  _moneyTexts:
+  - {fileID: 1835478728}
+  - {fileID: 1988097158}
 --- !u!1 &1615459555
 GameObject:
   m_ObjectHideFlags: 0
