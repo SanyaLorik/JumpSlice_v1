@@ -15598,6 +15598,7 @@ GameObject:
   - component: {fileID: 1608469283}
   - component: {fileID: 1608469284}
   - component: {fileID: 1608469286}
+  - component: {fileID: 1608469287}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -15782,6 +15783,7 @@ MonoBehaviour:
   _durationRange: 0.72
   _movementAnimation: {fileID: 1608469283}
   _trajectoryAnimation: {fileID: 1608469284}
+  _effect: {fileID: 1608469287}
 --- !u!114 &1608469286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15799,6 +15801,20 @@ MonoBehaviour:
   _duration: 0.64
   _minScaleFactor: 0.1
   _platformDebug: {fileID: 0}
+--- !u!114 &1608469287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608469278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c74a59dacc5e742a051cedddea2206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEffect
+  _jump: {fileID: 0}
+  _fall: {fileID: 0}
 --- !u!1 &1610983680
 GameObject:
   m_ObjectHideFlags: 0

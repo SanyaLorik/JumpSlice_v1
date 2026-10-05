@@ -21,6 +21,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private MovementAnimation _movementAnimation;
     [SerializeField] private TrajectoryAnimation _trajectoryAnimation;
 
+    [Header("Effect")]
+    [SerializeField] private PlayerEffect _effect;
+
     public event Action OnMoved;
 
     private CancellationTokenSource _tokenSource;
@@ -51,9 +54,15 @@ public class Movement : MonoBehaviour
 
     public void Move()
     {
+        _effect.Jump();
+
         _movingTask = _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height)
-            .ContinueWith(() => OnMoved?.Invoke());
+            .ContinueWith(() =>
+            {
+                OnMoved?.Invoke();
+                _effect.Fall();
+            });
     }
 
     public void OffsetPlayer()
