@@ -1,6 +1,8 @@
+using Architecture_M;
 using SanyaBeerExtension;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class AudioPlayerManager : MonoBehaviour
 {
@@ -9,17 +11,22 @@ public class AudioPlayerManager : MonoBehaviour
 
     private Button[] _buttons = null;
 
-    [ContextMenu("AddClickButton")]
-    private void AddClickButton()
-    {
-        _buttons?.ForEach(i => i.onClick.RemoveListener(OnButtonClick));
+    [Inject] private IGameSave _gameSave;
+    private GameSave _save;
 
-        _buttons = FindObjectsByType<Button>(FindObjectsInactive.Include);
-        _buttons.ForEach(i => i.onClick.AddListener(OnButtonClick));
+    private void Awake()
+    {
+        _save = _gameSave.GetSave<GameSave>();
     }
 
-    private void OnButtonClick()
+    private void Start()
     {
-        _sourceButtonClick.Play();
+        AddClickButton();
+    }
+
+    private void AddClickButton()
+    {
+        _buttons = FindObjectsByType<Button>(FindObjectsInactive.Include);
+        _buttons.ForEach(i => i.onClick.AddListener(() => _sourceButtonClick.Play()));
     }
 }

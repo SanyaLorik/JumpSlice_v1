@@ -33,7 +33,7 @@ AudioMixerController:
   - guid: c8e525ee367294e419abd8a14546cafc
     name: EffectsVolume
   - guid: 6ce98d4350434344289f7e3a2b332c47
-    name: MusicVolume
+    name: BackgroundVolume
   m_AudioMixerGroupViews:
   - guids:
     - 22518309b66ed514cbef3a597df2af61
@@ -87,7 +87,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 02ae353047b40bf408aa582761eae86b
   m_FloatValues:
-    9ff19c923eebc0346a82c633cdeb3228: 3.67
+    9ff19c923eebc0346a82c633cdeb3228: 1
     6ce98d4350434344289f7e3a2b332c47: -12
     385dd67dcb731644398c7b1fc7c6135e: 0.9
   m_TransitionOverrides: {}
@@ -97,7 +97,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Music Background
+  m_Name: Background
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 956c21a43b416e34585f3cebfeadd9f3
   m_Children: []

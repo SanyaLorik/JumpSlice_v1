@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: 1acb8d11acdf3a443aee647fcd271942
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: b375e0c9a2b2f70408ea4d9b2f35cd5f
+    m_Address: Assets/_PROJECT/Ui/Sprite/Icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ee0e72e194e5c643b29da1d9a63ee20, type: 2}
   m_SchemaSet:
