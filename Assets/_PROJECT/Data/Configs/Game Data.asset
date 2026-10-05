@@ -19,3 +19,10 @@ MonoBehaviour:
     <AdTimerInitial>k__BackingField: 0
     <AdTimerFinal>k__BackingField: 0
     <MinimumMinutesSocialNetworkingActivity>k__BackingField: 0
+    StartProfitPrice: 10
+    StartProfitIncoming: 1
+    IncomeBaseStep: 1
+    IncomeBonusFactor: 3
+    PricePower: 1.7
+    PriceExponent: 1.05
+    ProfitLevelTest: 7

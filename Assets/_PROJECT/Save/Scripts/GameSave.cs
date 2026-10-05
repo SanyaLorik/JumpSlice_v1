@@ -11,6 +11,8 @@ public class GameSave : GameSaveBase,
     [Header("Economy")]
     public int Money;
     public int Record;
+    public int HealthCount;
+    public int LevelProfit;
 
     [Header("Shop")]
     public ShopSave Shop;

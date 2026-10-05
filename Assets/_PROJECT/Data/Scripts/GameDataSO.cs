@@ -4,5 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Architecture_M/Data/Game Data")]
 public class GameDataSO : GameDataGenericBaseSO<GameData>
 {
-
+    [ContextMenu("ProfitTest")]
+    public void ProfitTest()
+    {
+        Data.ProfitTest();
+    }
 }
