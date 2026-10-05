@@ -25,8 +25,8 @@ public class AudioVolumeManager : MonoBehaviour
     [SerializeField] private AudioMixer _backgroundMixer;
 
     [Header("Mixer Parameters")]
-    [SerializeField] private string _effectParameter = "Effects_Volume";
-    [SerializeField] private string _backgroundParameter = "Background_Volume";
+    [SerializeField] private string _effectParameter = "EffectsVolume";
+    [SerializeField] private string _backgroundParameter = "BackgroundVolume";
 
     [Header("Volume (linear 0..1)")]
     [SerializeField, Range(0f, 1f)] private float _maxEffectVolume = 1f;
