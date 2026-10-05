@@ -1,4 +1,6 @@
+using Architecture_M;
 using UnityEngine;
+using Zenject;
 
 public class IngameResourse : MonoBehaviour
 {
@@ -9,9 +11,20 @@ public class IngameResourse : MonoBehaviour
     [SerializeField] private Wallet _money;
     [SerializeField] private Wallet _record;
 
+    [Inject] private IGameSave _gameSave;
+    [Inject] private GameData _data;
+    private GameSave _save;
+
+    private void Awake()
+    {
+        _save = _gameSave.GetSave<GameSave>();
+    }
+
     public void AddMoney()
     {
-        _money.Add(1);
+        int incoming = _data.GetProfitIncoming(_save.ProfitLevel);
+
+        _money.Add(incoming);
         _uiIngame.SetMoney(_money.Count);
     }
 

@@ -1,8 +1,8 @@
 using Architecture_M;
 using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class ChanceState : StateBase
 {
@@ -12,10 +12,6 @@ public class ChanceState : StateBase
     [Header("Ui")]
     [SerializeField] private UiChance _uiChance;
 
-    [Header("Managment")]
-    [SerializeField] private Button _returnButton;
-    [SerializeField] private Button _skipButton;
-
     [Header("States")]
     [SerializeField] private StateBase _ingameState;
     [SerializeField] private StateBase _gameOverState;
@@ -23,23 +19,32 @@ public class ChanceState : StateBase
     [Header("Animation")]
     [SerializeField] private DOTweenAnimationGenericBase<CanvasGroup> _skipAnimtion;
 
-    private void OnEnable()
+    [Inject] private IAdvertisingMonetization _monetization;
+    [Inject] private IGameSave _gameSave;
+    private GameSave _save;
+
+    private void Awake()
     {
-        _returnButton.onClick.AddListener(OnReturn);
-        _skipButton.onClick.AddListener(OnSkip);
+        _save = _gameSave.GetSave<GameSave>();
     }
 
-    private void OnDisable()
+    private void Start()
     {
-        _returnButton.onClick.RemoveListener(OnReturn);
-        _skipButton.onClick.RemoveListener(OnSkip);
+        _uiChance.AddReturnButtonListner(OnReturn);
+        _uiChance.AddReturnAdButtonListner(OnReturnAd);
+        _uiChance.AddSkipButtonListner(OnSkip);
     }
 
     public override async UniTask EnterAsync()
     {
+        if (_save.HealthCount > 0)
+            _uiChance.InteractReturnButton();
+        else
+            _uiChance.UninteractReturnButton();
+
         _skipAnimtion.ResetToInitialState();
 
-        _uiChance.SetHealth(1488);
+        _uiChance.SetHealth(_save.HealthCount);
 
         await _chanceWindow.ShowAsync();
 
@@ -55,7 +60,20 @@ public class ChanceState : StateBase
 
     private void OnReturn()
     {
+        _save.HealthCount--;
+        _gameSave.Save();
+
         ToIngame().Forget();
+    }
+
+    private void OnReturnAd()
+    {
+        _monetization.InvokeRewarded(null,
+            (isSuccess) =>
+            {
+                if (isSuccess == true)
+                    ToIngame().Forget();
+            });
     }
 
     private void OnSkip()
