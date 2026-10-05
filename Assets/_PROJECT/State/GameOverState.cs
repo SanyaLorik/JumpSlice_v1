@@ -52,7 +52,7 @@ public class GameOverState : StateBase
     public override async UniTask ExitAsync()
     {
         _continueAnimtion.ResetToInitialState();
-        _menuResource.UpdateResourse();
+        _menuResource.UpdateResourseAfterGameOver();
 
         await _gameOverWindow.HideAsync();
     }

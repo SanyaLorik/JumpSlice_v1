@@ -21,6 +21,9 @@ public class GameData : GameDataBase
     [Header("ProfitTest")]
     public int ProfitLevelTest;
 
+    [Header("Health")]
+    public int HealthPrice = 25;
+
     public void ProfitTest()
     {
         Debug.Log($"GetProfitIncoming: {GetProfitIncoming(ProfitLevelTest)}\n" +

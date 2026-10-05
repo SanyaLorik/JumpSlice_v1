@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: Local Save
   m_EditorClassIdentifier: Assembly-CSharp::GameSaveSO
   Save:
-    Money: 0
+    BackgroundVolume: 0
+    EffectVolume: -1
+    IsBackgroundVolume: 0
+    IsEffectVolume: 1
+    Money: 1000
     Record: 0
+    HealthCount: 6
+    ProfitLevel: 1
     Shop:
       IdSelect: 1
       Skins:

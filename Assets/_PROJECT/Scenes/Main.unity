@@ -15624,6 +15624,13 @@ MonoBehaviour:
   _moneyTexts:
   - {fileID: 1835478728}
   - {fileID: 1988097158}
+  _profitButton: {fileID: 832788818}
+  _profitLevelText: {fileID: 420162322}
+  _profitIncomingText: {fileID: 1112391161}
+  _profitPriceText: {fileID: 1918951540}
+  _healthButton: {fileID: 251742489}
+  _healthCountText: {fileID: 1610983682}
+  _healthPriceText: {fileID: 2061902520}
 --- !u!1 &1615459555
 GameObject:
   m_ObjectHideFlags: 0
