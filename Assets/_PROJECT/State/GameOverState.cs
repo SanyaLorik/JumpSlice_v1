@@ -1,7 +1,9 @@
 using Architecture_M;
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class GameOverState : StateBase
 {
@@ -10,9 +12,6 @@ public class GameOverState : StateBase
 
     [Header("Ui")]
     [SerializeField] private UiGameOver _uiGameOver;
-
-    [Header("Managment")]
-    [SerializeField] private Button _continueButton;
 
     [Header("States")]
     [SerializeField] private StateBase _menuState;
@@ -27,14 +26,12 @@ public class GameOverState : StateBase
     [Header("Resourse")]
     [SerializeField] private MenuResource _menuResource;
 
-    private void OnEnable()
-    {
-        _continueButton.onClick.AddListener(OnContinue);
-    }
+    [Inject] private IAdvertisingMonetization _monetization;
 
-    private void OnDisable()
+    private void Start()
     {
-        _continueButton.onClick.RemoveListener(OnContinue);
+        _uiGameOver.AddContinueButtonListner(OnContinue);
+        _uiGameOver.AddX2AdButtonListner(OnX2Ad);
     }
 
     public override async UniTask EnterAsync()
@@ -42,6 +39,7 @@ public class GameOverState : StateBase
         _continueAnimtion.ResetToInitialState();
 
         _uiGameOver.SetMoney(_ingameMoneyWallet.Count);
+        _uiGameOver.SetX2AdMoney(_ingameMoneyWallet.Count * 2);
         _uiGameOver.SetRecord(_ingameRecordWallet.Count);
 
         await _gameOverWindow.ShowAsync();
@@ -60,6 +58,19 @@ public class GameOverState : StateBase
     private void OnContinue()
     {
         ToMenu().Forget();
+    }
+
+    private void OnX2Ad()
+    {
+        _monetization.InvokeRewarded(null,
+            (isSuccess) =>
+            {
+                if (isSuccess == true)
+                {
+                    _ingameMoneyWallet.Add(_ingameMoneyWallet.Count);
+                    ToMenu().Forget();
+                }
+            });
     }
 
     private async UniTaskVoid ToMenu()

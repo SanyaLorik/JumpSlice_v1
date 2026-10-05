@@ -51,6 +51,7 @@ public class MenuResource : MonoBehaviour
     {
         _menuMoneyWallet.Add(_ingameMoneyWallet.Count);
 
+        _save.Money = _menuMoneyWallet.Count;
         _save.Record = Math.Max(_save.Record, _ingameRecordWallet.Count);
         _menuRecordWallet.Set(_save.Record);
 
