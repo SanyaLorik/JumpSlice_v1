@@ -28,6 +28,9 @@ public class IngameState : StateBase
     [Header("MiniTutorial")]
     [SerializeField] private MiniTutorial _miniTutorial;
 
+    [Header("Audio")]
+    [SerializeField] private AudioPlayerManager _audioPlayer;
+
     [Inject] private IInputPlayer _playerInput;
     [Inject] private IInputActivity _inputActivity;
 
@@ -134,6 +137,9 @@ public class IngameState : StateBase
             _platform = _generator.InitalPlatform;
 
         await _cameraGameplay.LookAtAsync(_platform.Target.position, platform.Direction);
+
+        _audioPlayer.PlatformAppearances();
+
         await platform.AppearanceAnimationAsync();
 
         if (platform.HasBonus == true)

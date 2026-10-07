@@ -22,7 +22,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private TrajectoryAnimation _trajectoryAnimation;
 
     [Header("Effect")]
-    [SerializeField] private PlayerEffect _effect;
+    [SerializeField] private PlayerEffect _effectFx;
+    [SerializeField] private AudioPlayerManager _effectAudio;
 
     public event Action OnMoved;
 
@@ -54,14 +55,17 @@ public class Movement : MonoBehaviour
 
     public void Move()
     {
-        _effect.Jump();
+        _effectFx.Jump();
+        _effectAudio.Jump();
 
         _movingTask = _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height)
             .ContinueWith(() =>
             {
                 OnMoved?.Invoke();
-                _effect.Fall();
+
+                _effectFx.Fall();
+                _effectAudio.Fall();
             });
     }
 
