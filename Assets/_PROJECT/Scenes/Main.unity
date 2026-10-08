@@ -1414,7 +1414,6 @@ RectTransform:
   - {fileID: 68977354}
   - {fileID: 1314978457}
   - {fileID: 1869792576}
-  - {fileID: 331557654}
   m_Father: {fileID: 2118283742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3064,6 +3063,7 @@ RectTransform:
   m_Children:
   - {fileID: 338371633}
   - {fileID: 960631652}
+  - {fileID: 331557654}
   m_Father: {fileID: 2118283742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3931,7 +3931,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 153508106}
+  m_Father: {fileID: 300671723}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9316,7 +9316,6 @@ MonoBehaviour:
   _ingameResours: {fileID: 1272121244}
   _cameraGameplay: {fileID: 1084577388}
   _miniTutorial: {fileID: 178748224}
-  _audioPlayer: {fileID: 1039828850}
 --- !u!1 &856637381
 GameObject:
   m_ObjectHideFlags: 0
@@ -10291,10 +10290,19 @@ MonoBehaviour:
   - {fileID: 1518469452}
   - {fileID: 423193700}
   - {fileID: 282570386}
-  _jumpClip: {fileID: 8300000, guid: 8c8094079c3139a40bb25be81847cd77, type: 3}
-  _fallClip: {fileID: 8300000, guid: c980f2278a6624548906b14825d1d14f, type: 3}
-  _platformAppearances: {fileID: 8300000, guid: cea38601e94b8a546a4a79e7ceda8790, type: 3}
-  _cubeCut: {fileID: 8300000, guid: 0234b814467071844bc11fe2c1ff62b1, type: 3}
+  _clips:
+  - <Key>k__BackingField: 0
+    <Value>k__BackingField: {fileID: 8300000, guid: 8c8094079c3139a40bb25be81847cd77, type: 3}
+  - <Key>k__BackingField: 1
+    <Value>k__BackingField: {fileID: 8300000, guid: c980f2278a6624548906b14825d1d14f, type: 3}
+  - <Key>k__BackingField: 2
+    <Value>k__BackingField: {fileID: 8300000, guid: cea38601e94b8a546a4a79e7ceda8790, type: 3}
+  - <Key>k__BackingField: 3
+    <Value>k__BackingField: {fileID: 8300000, guid: 0234b814467071844bc11fe2c1ff62b1, type: 3}
+  - <Key>k__BackingField: 4
+    <Value>k__BackingField: {fileID: 8300000, guid: 77a1edcc63c16244cbf8edb382c6dd3d, type: 3}
+  - <Key>k__BackingField: 5
+    <Value>k__BackingField: {fileID: 8300000, guid: c9e5dadb15cc7604aab3774b490b0da1, type: 3}
 --- !u!1 &1043784242
 GameObject:
   m_ObjectHideFlags: 0
@@ -16361,7 +16369,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _duration: 2
+  _duration: 1
 --- !u!114 &1608469284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16438,20 +16446,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.002897257
+      outSlope: 0.002897257
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 2
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.4970168
+    - serializedVersion: 3
+      time: 0.5001747
+      value: 0.4981572
+      inSlope: 4.394336
+      outSlope: 4.394336
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.1894373
+      outWeight: 0.2020122
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: -0
+      outSlope: -0
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
+      weightedMode: 1
+      inWeight: 0.4968591
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -16459,11 +16476,10 @@ MonoBehaviour:
   _range:
     <From>k__BackingField: -1.4
     <To>k__BackingField: 1.4
-  _durationRange: 0.72
+  _durationRange: 0.32
   _movementAnimation: {fileID: 1608469283}
   _trajectoryAnimation: {fileID: 1608469284}
   _effectFx: {fileID: 1608469287}
-  _effectAudio: {fileID: 1039828850}
 --- !u!114 &1608469286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16480,7 +16496,6 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: bb0fdbeda394f904a8f6bdc8b5c9df2a, type: 2}
   _duration: 0.64
   _minScaleFactor: 0.1
-  _audioPlayer: {fileID: 1039828850}
   _platformDebug: {fileID: 0}
 --- !u!114 &1608469287
 MonoBehaviour:
@@ -21886,49 +21901,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3157102896389114803, guid: eaf3f6a5997fad44698ef105adc60dc8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4015064750406074487, guid: eaf3f6a5997fad44698ef105adc60dc8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9073207428709838635}
   m_SourcePrefab: {fileID: 100100000, guid: eaf3f6a5997fad44698ef105adc60dc8, type: 3}
 --- !u!4 &9073207428709838633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7877141071012941500, guid: eaf3f6a5997fad44698ef105adc60dc8, type: 3}
   m_PrefabInstance: {fileID: 9073207428709838632}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9073207428709838634 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4015064750406074487, guid: eaf3f6a5997fad44698ef105adc60dc8, type: 3}
-  m_PrefabInstance: {fileID: 9073207428709838632}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9073207428709838635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9073207428709838634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_CustomShadowLayers: 0
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

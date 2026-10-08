@@ -36,6 +36,8 @@ public class GameOverState : StateBase
 
     public override async UniTask EnterAsync()
     {
+        AudioPlayerManager.Instance.Play(AudioClipType.GameOver);
+
         _continueAnimtion.ResetToInitialState();
 
         _uiGameOver.SetMoney(_ingameMoneyWallet.Count);

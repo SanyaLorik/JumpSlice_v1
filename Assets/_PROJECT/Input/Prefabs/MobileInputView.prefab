@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8786cfef4e24c4479b6938fe4d606f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobileInputView
-  _touchPlace: {fileID: 0}
+  _touchPlace: {fileID: 7975997859487799025}
 --- !u!1 &7975997859487799025
 GameObject:
   m_ObjectHideFlags: 0

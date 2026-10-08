@@ -23,7 +23,6 @@ public class Movement : MonoBehaviour
 
     [Header("Effect")]
     [SerializeField] private PlayerEffect _effectFx;
-    [SerializeField] private AudioPlayerManager _effectAudio;
 
     public event Action OnMoved;
 
@@ -56,7 +55,7 @@ public class Movement : MonoBehaviour
     public void Move()
     {
         _effectFx.Jump();
-        _effectAudio.Jump();
+        AudioPlayerManager.Instance.Play(AudioClipType.Jump);
 
         _movingTask = _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height)
@@ -65,7 +64,7 @@ public class Movement : MonoBehaviour
                 OnMoved?.Invoke();
 
                 _effectFx.Fall();
-                _effectAudio.Fall();
+                AudioPlayerManager.Instance.Play(AudioClipType.Fall);
             });
     }
 

@@ -7,24 +7,21 @@ using Zenject;
 
 public class AudioPlayerManager : MonoBehaviour
 {
+    public static AudioPlayerManager Instance { get; private set; }
+
     [Header("Button")]
     [SerializeField] private AudioSource _sourceButtonClick;
 
     [Header("Gameplay")]
     [SerializeField] private AudioSource[] _sourceGameplays;
-    [SerializeField] private AudioClip _jumpClip;
-    [SerializeField] private AudioClip _fallClip;
-    [SerializeField] private AudioClip _platformAppearances;
-    [SerializeField] private AudioClip _cubeCut;
+
+    [SerializeField] private PaieredKeyValueReadOnly<AudioClipType, AudioClip>[] _clips;
 
     private Button[] _buttons = null;
 
-    [Inject] private IGameSave _gameSave;
-    private GameSave _save;
-
     private void Awake()
     {
-        _save = _gameSave.GetSave<GameSave>();
+        Instance = this;
     }
 
     private void Start()
@@ -32,24 +29,10 @@ public class AudioPlayerManager : MonoBehaviour
         AddClickButton();
     }
 
-    public void Jump()
+    public void Play(AudioClipType key)
     {
-        Play(_jumpClip);
-    }
-
-    public void Fall()
-    {
-        Play(_fallClip);
-    }
-
-    public void PlatformAppearances()
-    {
-        Play(_platformAppearances);
-    }
-
-    public void CubeCut()
-    {
-        Play(_cubeCut);
+        AudioClip audioClip = _clips.FirstOrDefault(i => i.Key == key).Value;
+        Play(audioClip);
     }
 
     private void Play(AudioClip audioClip)
@@ -67,4 +50,14 @@ public class AudioPlayerManager : MonoBehaviour
         _buttons = FindObjectsByType<Button>(FindObjectsInactive.Include);
         _buttons.ForEach(i => i.onClick.AddListener(() => _sourceButtonClick.Play()));
     }
+}
+
+public enum AudioClipType
+{
+    Jump,
+    Fall,
+    PlatformAppearance,
+    CubeCute,
+    Chance,
+    GameOver
 }

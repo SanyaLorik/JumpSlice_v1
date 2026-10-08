@@ -15,9 +15,6 @@ public class PlayerSlicer : MonoBehaviour
     [Tooltip("Минимальный размер игрока, чтобы он не исчез полностью (0 = может исчезнуть)")]
     [SerializeField] private float _minScaleFactor = 0.1f;
 
-    [Header("Audio")]
-    [SerializeField] private AudioPlayerManager _audioPlayer;
-
     [Header("Debug")]
     [SerializeField] private Transform _platformDebug;
 
@@ -249,7 +246,7 @@ public class PlayerSlicer : MonoBehaviour
         int lenght = Mathf.Min(points.Count, directions.Count);
 
         if (lenght > 0)
-            _audioPlayer.CubeCut();
+            AudioPlayerManager.Instance.Play(AudioClipType.CubeCute);
 
         for (int i = 0; i < lenght; i++)
         {
