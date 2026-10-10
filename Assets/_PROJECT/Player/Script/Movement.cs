@@ -16,6 +16,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private AnimationCurve _lineEase;
     [SerializeField] private PairedValue<float> _range;
     [SerializeField] private float _durationRange;
+    [SerializeField] private float _numeratorBase;
+    [SerializeField] private float _denominatorBase;
+    [SerializeField] private float _increment;
 
     [Header("Animation")]
     [SerializeField] private MovementAnimation _movementAnimation;
@@ -31,8 +34,10 @@ public class Movement : MonoBehaviour
 
     private UniTask _movingTask;
 
-    public bool IsMoving => _movingTask.Status.IsCompleted() == false;
+    private int _counter = -1;
+    private float _currentDuration = 0;
 
+    public bool IsMoving => _movingTask.Status.IsCompleted() == false;
 
     [ContextMenu("Create")]
     private void CreateInInspector()
@@ -85,6 +90,18 @@ public class Movement : MonoBehaviour
 
     }
 
+    public void IncrimentCounter()
+    {
+        _counter++;
+        float p = ((_counter * _increment) + _numeratorBase) / ((_counter * _increment) + _denominatorBase);
+        _currentDuration = _durationRange - Mathf.Pow(_durationRange, p);
+    }
+
+    public void ResetCounter()
+    {
+        _counter = -1;
+    }
+
     private async UniTaskVoid MoveTargetAsync(Vector3 target, Vector3 direction)
     {
         while (_tokenSource.IsCancellationRequested == false)
@@ -104,7 +121,7 @@ public class Movement : MonoBehaviour
         do
         {
             // Нормализованное время (0..1)
-            float t = Mathf.Clamp01(expendedTime / _durationRange);
+            float t = Mathf.Clamp01(expendedTime / _currentDuration);
 
             float lerp = _lineEase.Evaluate(t);
 
@@ -118,7 +135,7 @@ public class Movement : MonoBehaviour
 
             await UniTask.Yield(cancellationToken: _tokenSource.Token);
         }
-        while (expendedTime <= _durationRange && _tokenSource.IsCancellationRequested == false);
+        while (expendedTime <= _currentDuration && _tokenSource.IsCancellationRequested == false);
     }
 
     private Vector3 OffsetTarget(Vector3 target, Vector3 direction)
@@ -129,5 +146,5 @@ public class Movement : MonoBehaviour
             target.z = _player.position.z;
 
         return target;
-    } 
+    }
 }

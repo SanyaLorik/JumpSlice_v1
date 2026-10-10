@@ -114,6 +114,7 @@ public class IngameState : StateBase
             if (isExpired == true)
             {
                 _playerBuilder.Lose();
+                _movement.ResetCounter();
 
                 AudioPlayerManager.Instance.Play(AudioClipType.Chance);
 
@@ -130,6 +131,8 @@ public class IngameState : StateBase
         }
 
         Platform platform = _generator.Generate();
+
+        _movement.IncrimentCounter();
         _movement.SetTarget(platform.Target.position, platform.Direction);
 
         if (_platform == null)

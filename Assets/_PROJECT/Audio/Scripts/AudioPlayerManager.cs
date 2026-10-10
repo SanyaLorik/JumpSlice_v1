@@ -59,5 +59,6 @@ public enum AudioClipType
     PlatformAppearance,
     CubeCute,
     Chance,
-    GameOver
+    GameOver,
+    LargeBonus
 }

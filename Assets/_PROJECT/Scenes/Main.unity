@@ -10922,6 +10922,8 @@ MonoBehaviour:
     <Value>k__BackingField: {fileID: 8300000, guid: 77a1edcc63c16244cbf8edb382c6dd3d, type: 3}
   - <Key>k__BackingField: 5
     <Value>k__BackingField: {fileID: 8300000, guid: c9e5dadb15cc7604aab3774b490b0da1, type: 3}
+  - <Key>k__BackingField: 6
+    <Value>k__BackingField: {fileID: 8300000, guid: 4e6ca2bf5851dce4f9804c51289f4195, type: 3}
 --- !u!1 &1043784242
 GameObject:
   m_ObjectHideFlags: 0
@@ -17243,6 +17245,9 @@ MonoBehaviour:
     <From>k__BackingField: -1.4
     <To>k__BackingField: 1.4
   _durationRange: 0.32
+  _numeratorBase: 12
+  _denominatorBase: 1
+  _increment: 1
   _movementAnimation: {fileID: 1608469283}
   _trajectoryAnimation: {fileID: 1608469284}
   _effectFx: {fileID: 1608469287}

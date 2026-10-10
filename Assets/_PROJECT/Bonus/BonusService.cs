@@ -14,6 +14,8 @@ public class BonusService : MonoBehaviour
 
     public async UniTask Large()
     {
+        AudioPlayerManager.Instance.Play(AudioClipType.LargeBonus);
+
         await _bonusLarge.Large();
     }
 }
