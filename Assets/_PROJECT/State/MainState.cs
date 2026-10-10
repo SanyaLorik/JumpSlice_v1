@@ -54,6 +54,7 @@ public class MainState : StateBase
     {
         if (_menuEnter == MenuEnter.First)
         {
+            AudioPlayerManager.Instance.Play(AudioClipType.PlatformAppearance);
             await _mainWindow.ShowAsync();
         }
 
@@ -64,6 +65,8 @@ public class MainState : StateBase
             await _cameraMenu.ReturnCameraAsync();
             await _platfromGenerator.DestroyAllAsync();
             await _mainWindow.ShowAsync();
+
+            AudioPlayerManager.Instance.Play(AudioClipType.PlatformAppearance);
 
             await _playerBuilder.RebuildAsync();
         }
