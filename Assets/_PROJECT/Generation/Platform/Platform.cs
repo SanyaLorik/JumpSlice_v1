@@ -45,7 +45,7 @@ public class Platform : MonoBehaviour, IPlatfromBonus
             .AsyncWaitForCompletion()
             .AsUniTask();
 
-        await BonusService.Instance.Large();
+        await BonusService.Instance.LargeAsync();
     }
 
     public void SetColor(Color color)

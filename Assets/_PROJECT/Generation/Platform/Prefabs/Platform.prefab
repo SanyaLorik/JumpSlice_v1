@@ -690,7 +690,7 @@ MonoBehaviour:
     <Ease>k__BackingField: 30
   _destroyAnimation:
     <Source>k__BackingField: {fileID: 7877141071012941500}
-    <Duration>k__BackingField: 0.32
+    <Duration>k__BackingField: 0.16
     <Ease>k__BackingField: 2
   _skins:
   - {fileID: 9080098548826782177}

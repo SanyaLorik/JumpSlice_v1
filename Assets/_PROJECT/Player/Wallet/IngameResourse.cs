@@ -26,12 +26,14 @@ public class IngameResourse : MonoBehaviour
 
         _money.Add(incoming);
         _uiIngame.SetMoney(_money.Count);
+        _uiIngame.AnimateMoney(_money.Count);
     }
 
     public void AddPlatform()
     {
         _record.Add(1);
         _uiIngame.SetRecord(_record.Count);
+        _uiIngame.AnimateRecord();
     }
 
     public void ResetResourse()

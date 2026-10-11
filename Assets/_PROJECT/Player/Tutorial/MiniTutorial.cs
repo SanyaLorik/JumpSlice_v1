@@ -6,22 +6,40 @@ using UnityEngine.UI;
 
 public class MiniTutorial : MonoBehaviour
 {
+    [Header("Finger")]
     [SerializeField] private DOTweenAnimationBase _finger;
-    [SerializeField] private ParametrBase<Image> _image;
+    [SerializeField] private ParametrBase<CanvasGroup> _fingerImage;
+
+    [Header("Key")]
+    [SerializeField] private DOTweenAnimationBase _key;
+    [SerializeField] private ParametrBase<CanvasGroup> _keyImage;
 
     public void StartTutorial()
     {
-        _finger.ResetToInitialState();
-        _finger.Animate();
-
-        _image.Source.DOFade(1, float.MinValue);
+        StartAnimation(_finger, _fingerImage);
+        StartAnimation(_key, _keyImage);
     }
 
     public void StopTutorial()
     {
-        _finger.Kill();
-        _image.Source
-            .DOFade(0, _image.Duration)
-            .SetEase(_image.Ease);
+        StopAnimation(_finger, _fingerImage);
+        StopAnimation(_key, _keyImage);
+    }
+
+    private void StartAnimation(DOTweenAnimationBase finger, ParametrBase<CanvasGroup> fingerImage)
+    {
+        finger.ResetToInitialState();
+        finger.Animate();
+
+        fingerImage.Source.DOFade(1, float.MinValue);
+    }
+
+    private void StopAnimation(DOTweenAnimationBase finger, ParametrBase<CanvasGroup> fingerImage)
+    {
+        finger.Kill();
+
+        fingerImage.Source
+            .DOFade(0, fingerImage.Duration)
+            .SetEase(fingerImage.Ease);
     }
 }
