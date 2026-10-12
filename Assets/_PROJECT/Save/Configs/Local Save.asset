@@ -17,7 +17,7 @@ MonoBehaviour:
     EffectVolume: -1
     IsBackgroundVolume: 0
     IsEffectVolume: 1
-    Money: 1000
+    Money: 1002
     Record: 0
     HealthCount: 6
     ProfitLevel: 1

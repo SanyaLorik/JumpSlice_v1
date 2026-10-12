@@ -57,6 +57,7 @@ public class MenuResource : MonoBehaviour
 
         UpdateBonus();
 
+        _ingameRecordWallet.Clear();
         _gameSave.Save();
     }
 
