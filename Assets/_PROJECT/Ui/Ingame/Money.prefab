@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -40, y: 0}
-  m_SizeDelta: {x: -80, y: 0}
+  m_AnchoredPosition: {x: -49.99997, y: 0}
+  m_SizeDelta: {x: -100.00005, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1073951096281795810
 CanvasRenderer:
@@ -92,12 +92,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 84.3
+  m_fontSize: 106.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 199.1
+  m_fontSizeMax: 256
   m_fontStyle: 16
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 4096
@@ -146,6 +146,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 583517335137937496}
+  - component: {fileID: 1864168846064370310}
+  - component: {fileID: 1831064132657004132}
   m_Layer: 0
   m_Name: Money
   m_TagString: Untagged
@@ -160,7 +162,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2593715411899339447}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -174,6 +176,32 @@ RectTransform:
   m_AnchoredPosition: {x: -510, y: -613}
   m_SizeDelta: {x: 290, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1864168846064370310
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593715411899339447}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &1831064132657004132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593715411899339447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed9b7e0dc2a85c4ba409931ead8a395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlyingMoney
+  _moneyText: {fileID: 2920156547915743034}
+  <CanvasGroup>k__BackingField: {fileID: 1864168846064370310}
 --- !u!1 &8022609456779025788
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,8 +236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -36, y: 0}
-  m_SizeDelta: {x: 72, y: -48}
+  m_AnchoredPosition: {x: -44.09961, y: 0}
+  m_SizeDelta: {x: 88.1993, y: -48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5917787900196874424
 CanvasRenderer:
