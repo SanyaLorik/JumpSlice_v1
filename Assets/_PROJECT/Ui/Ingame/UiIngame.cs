@@ -39,7 +39,6 @@ public class UiIngame : MonoBehaviour
 
     public void AnimateMoney(int money)
     {
-        FlyingMoney flyingMoney = BonusService.Instance.Money();
-        flyingMoney.SetText(money);
+        BonusService.Instance.Money(money);
     }
 }

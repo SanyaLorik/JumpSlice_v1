@@ -50,7 +50,8 @@ public class ChestBonus : MonoBehaviour
                .SetEase(_hidden.Ease))
            .JoinCallback(() =>
             {
-                BonusService.Instance.Money();
+                FlyingMoney flyingMoney = BonusService.Instance.Money();
+                IngameResourse.Instance.AddMoney(flyingMoney.Money);
             })
            .AsyncWaitForCompletion()
            .AsUniTask();

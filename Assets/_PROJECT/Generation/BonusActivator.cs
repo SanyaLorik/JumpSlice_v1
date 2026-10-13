@@ -27,7 +27,6 @@ public class BonusActivator : MonoBehaviour
     [SerializeField] private float _minCounterMultiplier = 0.1f;
 
     [Header("Chest")]
-    [SerializeField] private ChestBonus _chestBonus;
     [SerializeField][Range(0.05f, 1f)] private float _chestChance = 0.1f;
 
     // Large

@@ -1,12 +1,17 @@
+using Architecture_M;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 public class BonusService : MonoBehaviour
 {
+    public static BonusService Instance { get; private set; }
+
     [SerializeField] private BonusLarge _bonusLarge;
     [SerializeField] private BonusMoney _bonusMoney;
 
-    public static BonusService Instance { get; private set; }
+    [Inject] private GameData _gameData;
+    [Inject] private IGameSave _gameSave;
 
     private void Awake()
     {
@@ -20,8 +25,17 @@ public class BonusService : MonoBehaviour
         await _bonusLarge.Large();
     }
 
-    public FlyingMoney Money()
+    public FlyingMoney Money(int money = -1)
     {
-        return _bonusMoney.Money();
+        if (money == -1)
+        {
+            FlyingMoney flyingMoney = _bonusMoney.Money();
+            int countMoney = _gameData.GetChestMoney(_gameSave.GetSave<GameSave>().ProfitLevel);
+            flyingMoney.SetText(countMoney);
+
+            return flyingMoney;
+        }
+
+        return _bonusMoney.Money(money);
     }
 }

@@ -13,7 +13,7 @@ public class BonusMoney
     [SerializeField] private ParametrBase _moneyMoveParametr;
     [SerializeField] private ParametrBase _moneyFadeParametr;
 
-    public FlyingMoney Money()
+    public FlyingMoney Money(int money = 123)
     {
         Vector3 offset = new()
         {
@@ -35,6 +35,8 @@ public class BonusMoney
             {
                 UnityEngine.Object.Destroy(flyingMoney.gameObject);
             });
+
+        flyingMoney.SetText(money);
 
         return flyingMoney;
     }

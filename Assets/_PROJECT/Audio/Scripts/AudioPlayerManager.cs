@@ -60,5 +60,6 @@ public enum AudioClipType
     CubeCute,
     Chance,
     GameOver,
-    LargeBonus
+    LargeBonus,
+    MoneyTake
 }

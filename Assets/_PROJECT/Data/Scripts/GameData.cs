@@ -24,6 +24,9 @@ public class GameData : GameDataBase
     [Header("Health")]
     public int HealthPrice = 25;
 
+    [Header("Chest")]
+    [Range(0.1f, 1f)] public float ChestIncomingRatio = 0.2f;
+
     public void ProfitTest()
     {
         Debug.Log($"GetProfitIncoming: {GetProfitIncoming(ProfitLevelTest)}\n" +
@@ -56,4 +59,12 @@ public class GameData : GameDataBase
 
         return Mathf.RoundToInt(price);
     }
+
+    public int GetChestMoney(int level)
+    {
+        int profit = GetProfitIncoming(level);
+        float result = profit * ChestIncomingRatio;
+
+        return Mathf.CeilToInt(result);
+    } 
 }

@@ -4,6 +4,8 @@ using Zenject;
 
 public class IngameResourse : MonoBehaviour
 {
+    public static IngameResourse Instance { get; private set; }
+
     [Header("Ui")]
     [SerializeField] private UiIngame _uiIngame;
 
@@ -17,6 +19,8 @@ public class IngameResourse : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         _save = _gameSave.GetSave<GameSave>();
     }
 
@@ -24,9 +28,8 @@ public class IngameResourse : MonoBehaviour
     {
         int incoming = _data.GetProfitIncoming(_save.ProfitLevel);
 
-        _money.Add(incoming);
-        _uiIngame.SetMoney(_money.Count);
-        _uiIngame.AnimateMoney(_money.Count);
+        AddMoney(incoming);
+        _uiIngame.AnimateMoney(incoming);
     }
 
     public void AddPlatform()
@@ -40,5 +43,13 @@ public class IngameResourse : MonoBehaviour
     {
         _uiIngame.SetMoney(0);
         _uiIngame.SetRecord(0);
+    }
+
+    public void AddMoney(int money)
+    {
+        _money.Add(money);
+        _uiIngame.SetMoney(_money.Count);
+
+        AudioPlayerManager.Instance.Play(AudioClipType.MoneyTake);
     }
 }
