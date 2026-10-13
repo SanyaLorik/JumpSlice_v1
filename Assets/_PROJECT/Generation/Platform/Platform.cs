@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SanyaBeerExtension;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -21,10 +22,15 @@ public class Platform : MonoBehaviour, IPlatfromBonus
     [SerializeField] private GameObject _bonusActivity;
     [SerializeField] private ParametrBase<Transform> _bonusAppearanceAnimation;
     [SerializeField] private ParametrBase<Transform> _bonusDestroyAnimation;
-
     public Vector3 Direction { get; private set; }
 
+    private Action _landing;
     private MaterialPropertyBlock _block;
+
+    private void OnDestroy()
+    {
+        _landing = null;
+    }
 
     public void SetNumber(int number)
     {
@@ -108,5 +114,15 @@ public class Platform : MonoBehaviour, IPlatfromBonus
             .SetEase(_bonusAppearanceAnimation.Ease)
             .AsyncWaitForCompletion()
             .AsUniTask();
+    }
+
+    public void BindLanding(Action callback)
+    {
+        _landing += callback;
+    }
+
+    public void NotifyLanding()
+    {
+        _landing?.Invoke();
     }
 }

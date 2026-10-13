@@ -56,6 +56,8 @@ public class PlatfromGenerator : MonoBehaviour
 
         if (_bonusActivator.IsActive(NumberCounter) == true)
             platform.ActiveBonus();
+        else if (_bonusActivator.IsActiveChest() == true)
+            _bonusActivator.BindChestToPlatofrm(platform);
 
         NumberCounter++;
 

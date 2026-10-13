@@ -4,6 +4,7 @@ public class BonusActivator : MonoBehaviour
 {
     [SerializeField] private Transform _player;
 
+    [Header("Large")]
     [Header("Настройки размера игрока")]
     [Tooltip("Размер игрока, при котором бонус появляется максимально часто")]
     [SerializeField] private float _minPlayerScale = 0.5f;
@@ -25,6 +26,11 @@ public class BonusActivator : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float _minCounterMultiplier = 0.1f;
 
+    [Header("Chest")]
+    [SerializeField] private ChestBonus _chestBonus;
+    [SerializeField][Range(0.05f, 1f)] private float _chestChance = 0.1f;
+
+    // Large
     /// <summary>
     /// Проверяет, должен ли быть активирован бонус.
     /// </summary>
@@ -66,5 +72,22 @@ public class BonusActivator : MonoBehaviour
 
         Vector3 s = _player.localScale;
         return (s.x + s.z) / 2f;
+    }
+
+    // Money
+    public bool IsActiveChest()
+    {
+        return _chestChance >= Random.value;
+    }
+
+    public void BindChestToPlatofrm(Platform platform)
+    {
+        _chestBonus.SetPosition(platform.Target.position);
+        _chestBonus.ShowAnimation();
+
+        platform.BindLanding(() => 
+        {
+            _chestBonus.OpenAnimation();
+        });
     }
 }
