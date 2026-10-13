@@ -54,10 +54,10 @@ public class PlatfromGenerator : MonoBehaviour
         _platforms.Add(platform);
         _skyboxGradient.UpdateColor(NumberCounter - 1);
 
-        if (_bonusActivator.IsActive(NumberCounter) == true)
-            platform.ActiveBonus();
+        if (_bonusActivator.IsActiveLarge(NumberCounter) == true)
+            platform.ActiveLargeBonus();
         else if (_bonusActivator.IsActiveChest() == true)
-            _bonusActivator.BindChestToPlatofrm(platform);
+            platform.ActiveChestBonus();
 
         NumberCounter++;
 

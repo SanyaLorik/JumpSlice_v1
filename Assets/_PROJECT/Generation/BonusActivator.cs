@@ -34,7 +34,7 @@ public class BonusActivator : MonoBehaviour
     /// <summary>
     /// Проверяет, должен ли быть активирован бонус.
     /// </summary>
-    public bool IsActive(int numberCounter)
+    public bool IsActiveLarge(int numberCounter)
     {
         float chance = CalculateChance(numberCounter);
         return Random.value <= chance;
@@ -78,16 +78,5 @@ public class BonusActivator : MonoBehaviour
     public bool IsActiveChest()
     {
         return _chestChance >= Random.value;
-    }
-
-    public void BindChestToPlatofrm(Platform platform)
-    {
-        _chestBonus.SetPosition(platform.Target.position);
-        _chestBonus.ShowAnimation();
-
-        platform.BindLanding(() => 
-        {
-            _chestBonus.OpenAnimation();
-        });
     }
 }

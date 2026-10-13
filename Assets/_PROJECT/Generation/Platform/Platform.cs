@@ -19,18 +19,21 @@ public class Platform : MonoBehaviour, IPlatfromBonus
 
     [field: Header("Bonus")]
     [field: SerializeField] public bool HasBonus { get; private set; }
+
+    [field: Header("Large Bonus")]
     [SerializeField] private GameObject _bonusActivity;
     [SerializeField] private ParametrBase<Transform> _bonusAppearanceAnimation;
     [SerializeField] private ParametrBase<Transform> _bonusDestroyAnimation;
+
+    [Header("Chest")]
+    [SerializeField] private ChestBonus _chestBonus;
+
     public Vector3 Direction { get; private set; }
 
-    private Action _landing;
-    private MaterialPropertyBlock _block;
+    private Func<UniTask> _bonusRunner;
+    private Func<UniTask> _bonusShown;
 
-    private void OnDestroy()
-    {
-        _landing = null;
-    }
+    private MaterialPropertyBlock _block;
 
     public void SetNumber(int number)
     {
@@ -44,14 +47,7 @@ public class Platform : MonoBehaviour, IPlatfromBonus
 
     public async UniTask ApplyBonusAsync()
     {
-        await _bonusDestroyAnimation.Source
-            .DOScale(Vector3.zero, _bonusDestroyAnimation.Duration)
-            .SetEase(_bonusDestroyAnimation.Ease)
-            .OnComplete(() => _bonusActivity.DisactiveSelf())
-            .AsyncWaitForCompletion()
-            .AsUniTask();
-
-        await BonusService.Instance.LargeAsync();
+        await _bonusRunner.Invoke();
     }
 
     public void SetColor(Color color)
@@ -98,13 +94,46 @@ public class Platform : MonoBehaviour, IPlatfromBonus
     {
         Destroy(gameObject);
     }
+    
+    public void ActiveChestBonus()
+    {
+        _bonusRunner = _chestBonus.HideAsync;
+        _bonusShown = _chestBonus.ShowAsync;
 
-    public void ActiveBonus()
+        ActiveBonus();
+    }
+
+    public void ActiveLargeBonus()
+    {
+        _bonusRunner = LargeBonus;
+        _bonusShown = ShowLargeBonus;
+
+        ActiveBonus();
+    }
+
+    public async UniTask ShowBonusAsync()
+    {
+        await _bonusShown.Invoke();
+    }
+
+    private void ActiveBonus()
     {
         HasBonus = true;
     }
 
-    public async UniTask ShowBonusAsync()
+    private async UniTask LargeBonus()
+    {
+        await _bonusDestroyAnimation.Source
+            .DOScale(Vector3.zero, _bonusDestroyAnimation.Duration)
+            .SetEase(_bonusDestroyAnimation.Ease)
+            .OnComplete(() => _bonusActivity.DisactiveSelf())
+            .AsyncWaitForCompletion()
+            .AsUniTask();
+
+        await BonusService.Instance.LargeAsync();
+    }
+
+    private async UniTask ShowLargeBonus()
     {
         _bonusAppearanceAnimation.Source.localScale = Vector3.zero;
         _bonusActivity.ActiveSelf();
@@ -114,15 +143,5 @@ public class Platform : MonoBehaviour, IPlatfromBonus
             .SetEase(_bonusAppearanceAnimation.Ease)
             .AsyncWaitForCompletion()
             .AsUniTask();
-    }
-
-    public void BindLanding(Action callback)
-    {
-        _landing += callback;
-    }
-
-    public void NotifyLanding()
-    {
-        _landing?.Invoke();
     }
 }

@@ -123,8 +123,6 @@ public class IngameState : StateBase
                 return;
             }
 
-            _platform.NotifyLanding();
-
             _ingameResours.AddMoney();
             _ingameResours.AddPlatform();
 

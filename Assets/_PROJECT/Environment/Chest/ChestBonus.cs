@@ -1,4 +1,3 @@
-using Architecture_M;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using SanyaBeerExtension;
@@ -22,65 +21,40 @@ public class ChestBonus : MonoBehaviour
     [SerializeField] private ParametrBase<Transform> _showen;
     [SerializeField] private ParametrBase<Transform> _hidden;
 
-    private void Awake()
-    {
-        Hide();
-    }
-
-    public void OpenAnimation()
-    {
-        DOTween.Sequence()
-            .Append(_base.Source
-                .DOLocalMove(_offsetMoving, _base.Duration)
-                .SetEase(_base.Ease))
-            .Append(_cap.Source
-                .DOLocalRotate(_capAngle, _cap.Duration)
-                .SetEase(_cap.Ease))
-            .OnComplete(() =>
-            {
-                HideAnimation();
-                BonusService.Instance.Money();
-            });
-    }
-
-    public void SetPosition(Vector3 position)
-    {
-        _mainGameObject.transform.position = position;
-    }
-
-    public void ShowAnimation()
+    public async UniTask ShowAsync()
     {
         _mainGameObject.transform.localScale = Vector3.zero;
         _mainGameObject.ActiveSelf();
 
-        _showen.Source
+        await _showen.Source
             .DOScale(Vector3.one, _showen.Duration)
-            .SetEase(_showen.Ease);
+            .SetEase(_showen.Ease)
+            .AsyncWaitForCompletion()
+            .AsUniTask();
     }
 
-    private void HideAnimation()
+    public async UniTask HideAsync()
     {
-        _mainGameObject.transform.localScale = Vector3.one;
-        _mainGameObject.ActiveSelf();
+        UniTask a = _base.Source
+                .DOLocalMove(_offsetMoving, _base.Duration)
+                .SetEase(_base.Ease)
+                .AsyncWaitForCompletion()
+                .AsUniTask();
 
-        _hidden.Source
-            .DOScale(Vector3.zero, _hidden.Duration)
-            .SetEase(_hidden.Ease)
-            .OnComplete(() =>
+        UniTask b = DOTween.Sequence()
+           .Append(_cap.Source
+               .DOLocalRotate(_capAngle, _cap.Duration)
+               .SetEase(_cap.Ease))
+           .Append(_hidden.Source
+               .DOScale(Vector3.zero, _hidden.Duration)
+               .SetEase(_hidden.Ease))
+           .JoinCallback(() =>
             {
-                Hide();
-                ReturnToInitialState();
-            });
-    }
+                BonusService.Instance.Money();
+            })
+           .AsyncWaitForCompletion()
+           .AsUniTask();
 
-    private void Hide()
-    {
-        _mainGameObject.DisactiveSelf();
-    }
-
-    private void ReturnToInitialState()
-    {
-        _cap.Source.eulerAngles = _initialAngleCap;
-        _base.Source.localPosition -= _offsetMoving;
+        await UniTask.WhenAll(a, b);
     }
 }
