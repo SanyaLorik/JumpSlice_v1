@@ -31,6 +31,7 @@ public class Movement : MonoBehaviour
 
     private CancellationTokenSource _tokenSource;
     private Vector3 _currentTarget;
+    private Vector3 _direction;
 
     private UniTask _movingTask;
 
@@ -52,6 +53,7 @@ public class Movement : MonoBehaviour
 
         _tokenSource = new CancellationTokenSource();
 
+        _direction = direction;
         target = OffsetTarget(target, direction);
 
         MoveTargetAsync(target, direction).Forget();
@@ -63,7 +65,7 @@ public class Movement : MonoBehaviour
         AudioPlayerManager.Instance.Play(AudioClipType.Jump);
 
         _movingTask = _movementAnimation
-            .MoveAsync(_player, _currentTarget, _trajectory, _height)
+            .MoveAsync(_player, _currentTarget, _trajectory, _height, _direction)
             .ContinueWith(() =>
             {
                 OnMoved?.Invoke();
