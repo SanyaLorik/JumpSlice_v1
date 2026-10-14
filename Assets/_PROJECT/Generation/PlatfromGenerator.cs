@@ -15,6 +15,9 @@ public class PlatfromGenerator : MonoBehaviour
     [SerializeField] private PairedValue<float> _range;
     [SerializeField] private int _countAnimationDestroy;
 
+    [Header("Size")]
+    [SerializeField] private PlatformSize _platformSize;
+
     [Header("Anti-repeat")]
     [SerializeField, Min(1)] private int _maxRepeatCount = 2;
 
@@ -58,6 +61,8 @@ public class PlatfromGenerator : MonoBehaviour
             platform.ActiveLargeBonus();
         else if (_bonusActivator.IsActiveChest() == true)
             platform.ActiveChestBonus();
+
+        _platformSize.Resize(platform, direction, NumberCounter);
 
         NumberCounter++;
 

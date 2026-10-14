@@ -3211,6 +3211,10 @@ MonoBehaviour:
     <From>k__BackingField: 4
     <To>k__BackingField: 4
   _countAnimationDestroy: 5
+  _platformSize:
+    _numerator: 92
+    _denominator: 100
+    _increment: 3
   _maxRepeatCount: 2
   _platformGradient: {fileID: 116381813}
   _skyboxGradient: {fileID: 1112150927}
