@@ -8,6 +8,7 @@ public class ShopItemButton : MonoBehaviour
 {
     [field: SerializeField] public int Id { get; private set; }
     [field: SerializeField] public int Price { get; private set; }
+    [field: SerializeField] public Sprite Skin { get; private set; }
 
     [field: Header("Ad")]
     [field: SerializeField] public bool IsAd { get; private set; }

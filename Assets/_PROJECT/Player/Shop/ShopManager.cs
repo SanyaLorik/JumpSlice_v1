@@ -9,11 +9,13 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] private ShopItemButton[] _buttons;
     [SerializeField] private Wallet _globalWallet;
+    [SerializeField] private MeshRenderer _playerRender;
 
     [Inject] private IAdvertisingMonetization _advertising;
     [Inject] private IGameSave _gameSave;
 
     private ShopSave _shopSave;
+    private Material _skin;
 
     private void Awake()
     {
@@ -28,6 +30,12 @@ public class ShopManager : MonoBehaviour
             button.AddSelectClickCallback(() => SelectSkin(button));
             button.AddAdClickCallback(() => WatchAdSkin(button));
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (_skin != null)
+            Destroy(_skin);
     }
 
     public void UpdateView()
@@ -168,6 +176,17 @@ public class ShopManager : MonoBehaviour
 
     private void ApplySkin(ShopItemButton button)
     {
+        if (_skin != null)
+            Destroy(_skin);
 
+        Sprite sprite = button.Skin;
+        _skin = new(_playerRender.material)
+        {
+            mainTexture = sprite.texture
+        };
+
+        _skin.SetTexture("_MainTex", sprite.texture);
+
+        _playerRender.material = _skin;
     }
 }
