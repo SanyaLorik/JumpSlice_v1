@@ -15,8 +15,8 @@ MonoBehaviour:
   <Data>k__BackingField:
     <MinimumDelaySave>k__BackingField: 1
     <InterstitialAdStartDelay>k__BackingField: 80
-    <InterstitialDelay>k__BackingField: 20
-    <AdTimerInitial>k__BackingField: 0
+    <InterstitialDelay>k__BackingField: 70
+    <AdTimerInitial>k__BackingField: 2
     <AdTimerFinal>k__BackingField: 0
     <MinimumMinutesSocialNetworkingActivity>k__BackingField: 0
     StartProfitPrice: 10
@@ -26,3 +26,5 @@ MonoBehaviour:
     PricePower: 1.7
     PriceExponent: 1.05
     ProfitLevelTest: 7
+    HealthPrice: 25
+    ChestIncomingRatio: 0.2

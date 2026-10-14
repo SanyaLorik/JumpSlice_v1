@@ -30,6 +30,7 @@ public class IngameState : StateBase
 
     [Inject] private IInputPlayer _playerInput;
     [Inject] private IInputActivity _inputActivity;
+    [Inject] private IInterstitialDelaying _interstitialDelaying;
 
     private Platform _platform = null;
 
@@ -48,9 +49,7 @@ public class IngameState : StateBase
     public override async UniTask EnterAsync()
     {
         _inputActivity.Disable();
-
         _ingameResours.ResetResourse();
-
         _miniTutorial.StartTutorial();
 
         await _ingameWindow.ShowAsync();
@@ -58,6 +57,7 @@ public class IngameState : StateBase
         NextAsync().Forget();
 
         _inputActivity.Enable();
+        _interstitialDelaying.DisableTimer();
     }
 
     public override async UniTask ExitAsync()
@@ -66,12 +66,13 @@ public class IngameState : StateBase
 
         await _ingameWindow.HideAsync();
         await _chanceState.EnterAsync();
+
+        _interstitialDelaying.EnableTimer();
     }
 
     public async UniTask EnterReturnAsync()
     {
         _inputActivity.Disable();
-
         _playerBuilder.Zero();
 
         await _ingameWindow.ShowAsync();
@@ -80,6 +81,7 @@ public class IngameState : StateBase
         NextAsync().Forget();
 
         _inputActivity.Enable();
+        _interstitialDelaying.DisableTimer();
     }
 
     private void OnMove()
