@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: SDK Save
   m_EditorClassIdentifier: Assembly-CSharp::GameSaveSO
   Save:
-    LevelId: 0
+    BackgroundVolume: -1
+    EffectVolume: -1
+    IsBackgroundVolume: 1
+    IsEffectVolume: 1
+    Money: 0
+    Record: 0
+    HealthCount: 3
+    ProfitLevel: 1
     Shop:
       IdSelect: 0
       Skins:
       - Id: 0
         IsBought: 1
         IsAd: 0
-        MaxCountAd: 0
         CurrentCountAd: 0
+        MaxCountAd: 0
     DailyRewardSave:
       LastDateTimeReceived: 
       LastDayNumber: -1

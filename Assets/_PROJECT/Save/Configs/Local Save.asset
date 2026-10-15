@@ -22,7 +22,7 @@ MonoBehaviour:
     HealthCount: 6
     ProfitLevel: 1
     Shop:
-      IdSelect: 1
+      IdSelect: 0
       Skins:
       - Id: 0
         IsBought: 1
