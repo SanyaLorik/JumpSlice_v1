@@ -33,12 +33,10 @@ public class Movement : MonoBehaviour
     private Vector3 _currentTarget;
     private Vector3 _direction;
 
-    private UniTask _movingTask;
-
     private int _counter = -1;
     private float _currentDuration = 0;
 
-    public bool IsMoving => _movingTask.Status.IsCompleted() == false;
+    public bool IsMoving { get; private set; } = false;
 
     [ContextMenu("Create")]
     private void CreateInInspector()
@@ -61,18 +59,25 @@ public class Movement : MonoBehaviour
 
     public void Move()
     {
+        if (IsMoving == true)
+            return;
+
+        IsMoving = true;
+
         _effectFx.Jump();
         AudioPlayerManager.Instance.Play(AudioClipType.Jump);
 
-        _movingTask = _movementAnimation
+        _movementAnimation
             .MoveAsync(_player, _currentTarget, _trajectory, _height, _direction)
             .ContinueWith(() =>
             {
-                OnMoved?.Invoke();
-
                 _effectFx.Fall();
                 AudioPlayerManager.Instance.Play(AudioClipType.Fall);
-            });
+
+                OnMoved?.Invoke();
+                IsMoving = false;
+            })
+            .Forget();
     }
 
     public void OffsetPlayer()
@@ -83,12 +88,12 @@ public class Movement : MonoBehaviour
     
     public void ShowTrajectory()
     {
-        _trajectoryAnimation.ShowAnimationAsync().Forget();
+        _trajectoryAnimation.ShowAnimation();
     }
 
     public void HideTrajectory()
     {
-        _trajectoryAnimation.HideAnimationAsync().Forget();
+        _trajectoryAnimation.HideAnimation();
 
     }
 

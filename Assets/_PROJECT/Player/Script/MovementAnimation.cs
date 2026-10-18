@@ -33,6 +33,8 @@ public class MovementAnimation : MonoBehaviour
             await UniTask.Yield();
         }
         while (expendedTime < _duration);
+
+        player.rotation = Quaternion.AngleAxis(360f, axis) * startRot;
     }
 
     private void Move(Transform player, AnimationCurve trajectory, float height, Vector3 initial, Vector3 final, float t)

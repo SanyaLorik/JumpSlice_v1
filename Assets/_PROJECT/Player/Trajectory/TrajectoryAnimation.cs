@@ -21,34 +21,37 @@ public class TrajectoryAnimation : MonoBehaviour
 
     public Vector3 Target { get; private set; } = Vector3.zero;
 
+    private Material _material;
+    private Tween _tween;
+
     private void Start()
     {
+        _material = _line.materials[0];
+
         if (_isStartHide == true)
             Hide();
     }
 
-    public async UniTask ShowAnimationAsync()
+    public void ShowAnimation()
     {
-        Material material = _line.materials[0];
+        _tween?.Kill();
 
-        material.DOFade(0, float.MinValue);
+        _tween = _material.DOFade(0, float.MinValue);
 
-        await material
+        _tween = _material
             .DOFade(1, _durationShown)
-            .SetEase(_easeShown)
-            .AsyncWaitForCompletion();
+            .SetEase(_easeShown);
     }
 
-    public async UniTask HideAnimationAsync()
+    public void HideAnimation()
     {
-        Material material = _line.materials[0];
+        _tween?.Kill();
 
-        material.DOFade(1, float.MinValue);
+        _tween = _material.DOFade(1, float.MinValue);
 
-        await material
+        _tween = _material
             .DOFade(0, _durationHide)
-            .SetEase(_easeHide)
-            .AsyncWaitForCompletion();
+            .SetEase(_easeHide);
     }
 
     public void Hide()
