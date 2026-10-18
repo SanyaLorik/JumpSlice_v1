@@ -18258,7 +18258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSlicer
   _player: {fileID: 1100742782}
-  _material: {fileID: 2100000, guid: bb0fdbeda394f904a8f6bdc8b5c9df2a, type: 2}
+  _sliceMaterial: {fileID: 2100000, guid: ab7eda9731ff8fe4b808bf4e31dcc96a, type: 2}
   _duration: 0.64
   _minScaleFactor: 0.1
   _platformDebug: {fileID: 0}

@@ -8,7 +8,7 @@ public class PlayerSlicer : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _player;
-    [SerializeField] private Material _material; 
+    [SerializeField] private Material _sliceMaterial;
     [SerializeField] private float _duration;
 
     [Header("Settings")]
@@ -252,8 +252,8 @@ public class PlayerSlicer : MonoBehaviour
         {
             SlicedHull slicedHull = _player.gameObject.Slice(points[i], directions[i]);
 
-            GameObject lower = slicedHull.CreateLowerHull(_player.gameObject, _material);
-            GameObject upper = slicedHull.CreateUpperHull(_player.gameObject, _material);
+            GameObject lower = slicedHull.CreateLowerHull(_player.gameObject, _sliceMaterial);
+            GameObject upper = slicedHull.CreateUpperHull(_player.gameObject, _sliceMaterial);
 
             float lowerDistance = (_player.position - lower.transform.position).sqrMagnitude;
             float upperDistance = (_player.position - upper.transform.position).sqrMagnitude;
