@@ -700,12 +700,12 @@ MonoBehaviour:
   _bonusActivity: {fileID: 5597109324961292301}
   _bonusAppearanceAnimation:
     <Source>k__BackingField: {fileID: 8080045693341159776}
-    <Duration>k__BackingField: 0.64
-    <Ease>k__BackingField: 1
+    <Duration>k__BackingField: 0.48
+    <Ease>k__BackingField: 6
   _bonusDestroyAnimation:
     <Source>k__BackingField: {fileID: 8080045693341159776}
     <Duration>k__BackingField: 0.32
-    <Ease>k__BackingField: 1
+    <Ease>k__BackingField: 27
   _chestBonus: {fileID: 4602609029020542168}
 --- !u!1 &5514617465288283905
 GameObject:

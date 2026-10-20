@@ -14,6 +14,11 @@ public class MiniTutorial : MonoBehaviour
     [SerializeField] private DOTweenAnimationBase _key;
     [SerializeField] private ParametrBase<CanvasGroup> _keyImage;
 
+    private void Awake()
+    {
+        StopTutorial();
+    }
+
     public void StartTutorial()
     {
         StartAnimation(_finger, _fingerImage);

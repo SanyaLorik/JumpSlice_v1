@@ -50,13 +50,15 @@ public class IngameState : StateBase
     {
         _inputActivity.Disable();
         _ingameResours.ResetResourse();
-        _miniTutorial.StartTutorial();
+        _miniTutorial.StopTutorial();
 
         await _ingameWindow.ShowAsync();
 
         NextAsync().Forget();
 
         _inputActivity.Enable();
+        _miniTutorial.StartTutorial();
+
         _interstitialDelaying.DisableTimer();
     }
 
@@ -66,6 +68,8 @@ public class IngameState : StateBase
 
         await _ingameWindow.HideAsync();
         await _chanceState.EnterAsync();
+
+        _miniTutorial.StopTutorial();
 
         _interstitialDelaying.EnableTimer();
     }
