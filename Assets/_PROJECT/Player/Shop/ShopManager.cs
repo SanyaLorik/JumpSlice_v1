@@ -20,6 +20,9 @@ public class ShopManager : MonoBehaviour
     private void Awake()
     {
         _shopSave = _gameSave.GetSave<GameSave>().Shop;
+
+        ShopItemButton defualtShop = _buttons.FirstOrDefault(i => i.Id == _shopSave.IdSelect);
+        ApplySkin(defualtShop);
     }
 
     private void Start()
