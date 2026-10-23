@@ -84,6 +84,7 @@ public class Platform : MonoBehaviour, IPlatfromBonus
         await _destroyAnimation.Source
             .DOScale(Vector3.zero, _destroyAnimation.Duration)
             .SetEase(_destroyAnimation.Ease)
+            .SetLink(gameObject)
             .AsyncWaitForCompletion()
             .AsUniTask();
 

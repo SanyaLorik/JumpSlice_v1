@@ -23,12 +23,7 @@ MonoBehaviour:
     ProfitLevel: 1
     Shop:
       IdSelect: 0
-      Skins:
-      - Id: 0
-        IsBought: 1
-        IsAd: 0
-        CurrentCountAd: 0
-        MaxCountAd: 0
+      Skins: []
     DailyRewardSave:
       LastDateTimeReceived: 
       LastDayNumber: -1
